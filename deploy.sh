@@ -29,6 +29,7 @@ cd ..
 echo "Front End Deployed"
 
 echo "Building application For Caddy"
+docker-compose up -d
 
 # docker-compose up -d --build
 
