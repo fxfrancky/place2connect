@@ -2,7 +2,7 @@
 set -e
 
 echo "Pulling The App from git"
-# git pull
+git pull
 
 echo "Copying app.env file to place2connect-api"
 cp app.env ./place2connect-api
