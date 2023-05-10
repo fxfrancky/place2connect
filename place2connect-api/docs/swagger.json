@@ -1,0 +1,1772 @@
+{
+    "produces": [
+        "application/json"
+    ],
+    "schemes": [
+        "http",
+        "https"
+    ],
+    "swagger": "2.0",
+    "info": {
+        "description": "PLACE2CONNECT Docs.",
+        "title": "PLACE2CONNECT API",
+        "termsOfService": "http://swagger.io/terms/",
+        "contact": {
+            "name": "PLACE2CONNECT API Support",
+            "email": "contact@owonafx.com"
+        },
+        "license": {
+            "name": "pace2connect 2.0"
+        },
+        "version": "1.0"
+    },
+    "paths": {
+        "/api/v1/auth/login": {
+            "post": {
+                "description": "Signin/Login  a user to the API.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "login a user to the API.",
+                "parameters": [
+                    {
+                        "description": "Sign In Input",
+                        "name": "signInput",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/handlers.SignInInput"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "answer",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "Status BadRequest",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "403": {
+                        "description": "Status Forbidden",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "422": {
+                        "description": "Status UnprocessableEntity",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "502": {
+                        "description": "Status BadGateway",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/auth/logout": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Logout  of the the API.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "Logout  of the the API.",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Authentication header",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "403": {
+                        "description": "Status Forbidden",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "502": {
+                        "description": "Status BadGateway",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/auth/refresh": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "refresh the current TOKEN.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "refresh the current TOKEN",
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "403": {
+                        "description": "Status Forbidden",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "422": {
+                        "description": "Status UnprocessableEntity",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "502": {
+                        "description": "Status BadGateway",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/auth/register": {
+            "post": {
+                "description": "Signup/Register a new user.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "create a new user",
+                "parameters": [
+                    {
+                        "description": "SignInput",
+                        "name": "signInput",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/handlers.SignUpInput"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.UserResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Status BadRequest",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "403": {
+                        "description": "Status Forbidden",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "409": {
+                        "description": "Status Conflict",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "502": {
+                        "description": "Status BadGateway",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/auth/users/{id}": {
+            "delete": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Delete a User. Auth is required",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "Delete a User",
+                "operationId": "delete-user",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Id of the user to delete",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Authentication header",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.UserResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Status BadRequest",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "403": {
+                        "description": "Status Forbidden",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "404": {
+                        "description": "Status Not Found",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "409": {
+                        "description": "Status Conflict",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "422": {
+                        "description": "Status UnprocessableEntity",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "502": {
+                        "description": "Status BadGateway",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/auth/users/{limit}/{offset}": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Display all Users. Auth is required",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "Display all Users",
+                "operationId": "all-users",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Limit number of products returned (default is 20)",
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Offset/Skip number of products (default is 0)",
+                        "name": "offset",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Authentication header",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.UserListResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Status BadRequest",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "Status Internal Server Error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "502": {
+                        "description": "Status BadGateway",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/imageUpload/": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "UploadImage func to upload an image",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Post"
+                ],
+                "summary": "Upload an image",
+                "operationId": "upload-image",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Authentication header",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Status BadRequest",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "403": {
+                        "description": "Status Forbidden",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "409": {
+                        "description": "Status Conflict",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "422": {
+                        "description": "Status UnprocessableEntity",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "502": {
+                        "description": "Status BadGateway",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/posts": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "CreatePost create a new Post",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Post"
+                ],
+                "summary": "create a new Post",
+                "operationId": "create-post",
+                "parameters": [
+                    {
+                        "description": "The PostRequest",
+                        "name": "Post",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/handlers.PostRequest"
+                        }
+                    },
+                    {
+                        "type": "string",
+                        "description": "Authentication header",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.PostResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Status BadRequest",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "403": {
+                        "description": "Status Forbidden",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "409": {
+                        "description": "Status Conflict",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "422": {
+                        "description": "Status UnprocessableEntity",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "502": {
+                        "description": "Status BadGateway",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/posts/users/{user_id}/{limit}/{offset}": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Display all Posts of a User By userId. Auth is required",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "Display all Posts of a User",
+                "operationId": "all-user-posts",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "ID of the user for posts",
+                        "name": "user_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Limit number of Posts returned (default is 20)",
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Offset/Skip number of posts (default is 0)",
+                        "name": "offset",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Authentication header",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.PostListResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Status BadRequest",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "Status Internal Server Error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "502": {
+                        "description": "Status BadGateway",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/posts/{limit}/{offset}": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Display all Post. Auth is required",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Post"
+                ],
+                "summary": "Display all Post",
+                "operationId": "all-posts",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Limit number of posts returned (default is 20)",
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Offset/Skip number of posts (default is 0)",
+                        "name": "offset",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Authentication header",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.PostListResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Status BadRequest",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "Status Internal Server Error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "502": {
+                        "description": "Status BadGateway",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/usercomments": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "AddCommentToPost add a new comment to Post",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Post"
+                ],
+                "summary": "Add a new Comment to a Post",
+                "operationId": "add-comment",
+                "parameters": [
+                    {
+                        "description": "CommentRequest",
+                        "name": "commentRequest",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/handlers.CommentRequest"
+                        }
+                    },
+                    {
+                        "type": "string",
+                        "description": "Authentication header",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.PostResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Status BadRequest",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "403": {
+                        "description": "Status Forbidden",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "409": {
+                        "description": "Status Conflict",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "422": {
+                        "description": "Status UnprocessableEntity",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "502": {
+                        "description": "Status BadGateway",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/userfriends": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "AddFriendToUser add a new friend to User",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "Add a new Friend to a User",
+                "operationId": "add-friend",
+                "parameters": [
+                    {
+                        "description": "Add User to Friend",
+                        "name": "userFriend",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/handlers.AddUserFriendRequest"
+                        }
+                    },
+                    {
+                        "type": "string",
+                        "description": "Authentication header",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.UserResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Status BadRequest",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "403": {
+                        "description": "Status Forbidden",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "409": {
+                        "description": "Status Conflict",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "422": {
+                        "description": "Status UnprocessableEntity",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "502": {
+                        "description": "Status BadGateway",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/userfriends/": {
+            "delete": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "RemoveFriendToUser remove a friend to a User",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "Remove a new Friend to a User",
+                "operationId": "remove-friend",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Id of the User to remove the friend",
+                        "name": "userID",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Id of the UserFriend to remove",
+                        "name": "friendID",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Authentication header",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.UserResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Status BadRequest",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "403": {
+                        "description": "Status Forbidden",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "409": {
+                        "description": "Status Conflict",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "422": {
+                        "description": "Status UnprocessableEntity",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "502": {
+                        "description": "Status BadGateway",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/userlikes": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "AddLikeToPost add a new like to Post",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Post"
+                ],
+                "summary": "Add a new Like to a Post",
+                "operationId": "add-like",
+                "parameters": [
+                    {
+                        "description": "LikeRequest",
+                        "name": "likeRequest",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/handlers.LikeRequest"
+                        }
+                    },
+                    {
+                        "type": "string",
+                        "description": "Authentication header",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.PostResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Status BadRequest",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "403": {
+                        "description": "Status Forbidden",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "409": {
+                        "description": "Status Conflict",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "422": {
+                        "description": "Status UnprocessableEntity",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "502": {
+                        "description": "Status BadGateway",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/users/email/{email}": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Get a user. Auth required",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "Get a user",
+                "operationId": "get-user-by-email",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Email of the user to get",
+                        "name": "email",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Authentication header",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.UserResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Status BadRequest",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "Status Internal Server Error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/users/me": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Get current user.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "Logout  of the the API.",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Authentication header",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/api/v1/users/{id}": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Get a user By ID. Auth required",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "Get a user ID",
+                "operationId": "get-user-by-id",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Id of the user to get",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Authentication header",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.UserResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Status BadRequest",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "Status Internal Server Error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Update a User. Auth is required",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "Update a user",
+                "operationId": "update-user",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Id of the user to update",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "User to update",
+                        "name": "user",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/handlers.UpdateUserRequest"
+                        }
+                    },
+                    {
+                        "type": "string",
+                        "description": "Authentication header",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.UserResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Status BadRequest",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "403": {
+                        "description": "Status Forbidden",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "404": {
+                        "description": "Status Not Found",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "409": {
+                        "description": "Status Conflict",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "422": {
+                        "description": "Status UnprocessableEntity",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "502": {
+                        "description": "Status BadGateway",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/users/{userID}/{limit}/{offset}": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Display all Friends of a User By userId. Auth is required",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "Display all Friends of a User",
+                "operationId": "all-user-friends",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "ID of the user for friends",
+                        "name": "userID",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Limit number of Friends returned (default is 20)",
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Offset/Skip number of friends (default is 0)",
+                        "name": "offset",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Authentication header",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.UserListResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Status BadRequest",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "Status Internal Server Error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "502": {
+                        "description": "Status BadGateway",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "gorm.DeletedAt": {
+            "type": "object",
+            "properties": {
+                "time": {
+                    "type": "string"
+                },
+                "valid": {
+                    "description": "Valid is true if Time is not NULL",
+                    "type": "boolean"
+                }
+            }
+        },
+        "handlers.AddUserFriendRequest": {
+            "type": "object",
+            "required": [
+                "friendID",
+                "userID"
+            ],
+            "properties": {
+                "friendID": {
+                    "type": "integer"
+                },
+                "userID": {
+                    "type": "integer"
+                }
+            }
+        },
+        "handlers.CommentRequest": {
+            "type": "object",
+            "required": [
+                "commentDescription",
+                "postID",
+                "userID"
+            ],
+            "properties": {
+                "commentDescription": {
+                    "type": "string",
+                    "minLength": 5
+                },
+                "postID": {
+                    "type": "integer"
+                },
+                "userID": {
+                    "type": "integer"
+                }
+            }
+        },
+        "handlers.CommentResponse": {
+            "type": "object",
+            "properties": {
+                "comment_description": {
+                    "type": "string"
+                },
+                "created_at": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "post_id": {
+                    "type": "integer"
+                },
+                "updated_at": {
+                    "type": "string"
+                },
+                "user_id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "handlers.LikeRequest": {
+            "type": "object",
+            "required": [
+                "isLikablePost",
+                "postID",
+                "userID"
+            ],
+            "properties": {
+                "isLikablePost": {
+                    "type": "boolean"
+                },
+                "postID": {
+                    "type": "integer"
+                },
+                "userID": {
+                    "type": "integer"
+                }
+            }
+        },
+        "handlers.LikeResponse": {
+            "type": "object",
+            "properties": {
+                "created_at": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "is_likable_post": {
+                    "type": "boolean"
+                },
+                "post_id": {
+                    "type": "integer"
+                },
+                "updated_at": {
+                    "type": "string"
+                },
+                "user_id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "handlers.PostListResponse": {
+            "type": "object",
+            "properties": {
+                "postCount": {
+                    "type": "integer"
+                },
+                "posts": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/handlers.PostResponse"
+                    }
+                }
+            }
+        },
+        "handlers.PostRequest": {
+            "type": "object",
+            "required": [
+                "description",
+                "userID"
+            ],
+            "properties": {
+                "description": {
+                    "description": "FirstName       string `json:\"first_name\" validate:\"required,min=3\"`\nLastName        string `json:\"last_name\" validate:\"required,min=3\"`\nLocation        string `json:\"location,omitempty\"`",
+                    "type": "string",
+                    "minLength": 8
+                },
+                "picturePath": {
+                    "type": "string"
+                },
+                "userID": {
+                    "type": "integer"
+                }
+            }
+        },
+        "handlers.PostResponse": {
+            "type": "object",
+            "properties": {
+                "comments": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/handlers.CommentResponse"
+                    }
+                },
+                "createdAt": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "firstName": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "lastName": {
+                    "type": "string"
+                },
+                "likes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/handlers.LikeResponse"
+                    }
+                },
+                "location": {
+                    "type": "string"
+                },
+                "picturePath": {
+                    "type": "string"
+                },
+                "updatedAt": {
+                    "type": "string"
+                },
+                "userID": {
+                    "type": "integer"
+                },
+                "userPicturePath": {
+                    "type": "string"
+                }
+            }
+        },
+        "handlers.SignInInput": {
+            "type": "object",
+            "required": [
+                "email",
+                "password"
+            ],
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                }
+            }
+        },
+        "handlers.SignUpInput": {
+            "type": "object",
+            "required": [
+                "firstName",
+                "lastName",
+                "location",
+                "occupation",
+                "password",
+                "picturePath"
+            ],
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "firstName": {
+                    "type": "string",
+                    "minLength": 3
+                },
+                "friends": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.User"
+                    }
+                },
+                "impressions": {
+                    "type": "integer"
+                },
+                "isAdmin": {
+                    "type": "boolean"
+                },
+                "isVerified": {
+                    "type": "boolean"
+                },
+                "lastName": {
+                    "type": "string",
+                    "minLength": 3
+                },
+                "location": {
+                    "type": "string",
+                    "minLength": 3
+                },
+                "occupation": {
+                    "type": "string",
+                    "minLength": 3
+                },
+                "password": {
+                    "type": "string",
+                    "minLength": 8
+                },
+                "photo": {
+                    "type": "string"
+                },
+                "picturePath": {
+                    "type": "string",
+                    "minLength": 3
+                },
+                "provider": {
+                    "description": "PasswordConfirm string        `json:\"passwordConfirm\" validate:\"required,min=8\"`",
+                    "type": "string"
+                },
+                "viewedProfile": {
+                    "type": "integer"
+                }
+            }
+        },
+        "handlers.UpdateUserRequest": {
+            "type": "object",
+            "required": [
+                "firstName",
+                "lastName",
+                "location",
+                "occupation",
+                "password",
+                "picturePath"
+            ],
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "firstName": {
+                    "type": "string"
+                },
+                "friends": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.User"
+                    }
+                },
+                "impressions": {
+                    "type": "integer"
+                },
+                "isAdmin": {
+                    "type": "boolean"
+                },
+                "isVerified": {
+                    "type": "boolean"
+                },
+                "lastName": {
+                    "type": "string"
+                },
+                "location": {
+                    "type": "string",
+                    "minLength": 3
+                },
+                "occupation": {
+                    "type": "string",
+                    "minLength": 3
+                },
+                "password": {
+                    "type": "string",
+                    "minLength": 8
+                },
+                "photo": {
+                    "type": "string"
+                },
+                "picturePath": {
+                    "type": "string",
+                    "minLength": 3
+                },
+                "provider": {
+                    "type": "string"
+                },
+                "role": {
+                    "type": "string"
+                },
+                "viewedProfile": {
+                    "type": "integer"
+                }
+            }
+        },
+        "handlers.UserListResponse": {
+            "type": "object",
+            "properties": {
+                "users": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/handlers.UserResponse"
+                    }
+                },
+                "usersCount": {
+                    "type": "integer"
+                }
+            }
+        },
+        "handlers.UserResponse": {
+            "type": "object",
+            "properties": {
+                "created_at": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "firstName": {
+                    "type": "string"
+                },
+                "friends": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/handlers.UserResponse"
+                    }
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "impressions": {
+                    "type": "integer"
+                },
+                "isAdmin": {
+                    "type": "boolean"
+                },
+                "isVerified": {
+                    "type": "boolean"
+                },
+                "lastName": {
+                    "type": "string"
+                },
+                "location": {
+                    "type": "string"
+                },
+                "occupation": {
+                    "type": "string"
+                },
+                "photo": {
+                    "type": "string"
+                },
+                "picturePath": {
+                    "type": "string"
+                },
+                "provider": {
+                    "type": "string"
+                },
+                "role": {
+                    "type": "string"
+                },
+                "updated_at": {
+                    "type": "string"
+                },
+                "viewedProfile": {
+                    "type": "integer"
+                }
+            }
+        },
+        "models.User": {
+            "type": "object",
+            "properties": {
+                "createdAt": {
+                    "type": "string"
+                },
+                "deletedAt": {
+                    "$ref": "#/definitions/gorm.DeletedAt"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "firstName": {
+                    "type": "string"
+                },
+                "friends": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.User"
+                    }
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "impressions": {
+                    "type": "integer"
+                },
+                "isAdmin": {
+                    "type": "boolean"
+                },
+                "lastName": {
+                    "type": "string"
+                },
+                "location": {
+                    "type": "string"
+                },
+                "occupation": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "photo": {
+                    "type": "string"
+                },
+                "picturePath": {
+                    "type": "string"
+                },
+                "provider": {
+                    "type": "string"
+                },
+                "role": {
+                    "type": "string"
+                },
+                "updatedAt": {
+                    "type": "string"
+                },
+                "verified": {
+                    "type": "boolean"
+                },
+                "viewedProfile": {
+                    "type": "integer"
+                }
+            }
+        }
+    },
+    "securityDefinitions": {
+        "ApiKeyAuth": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
+        }
+    }
+}

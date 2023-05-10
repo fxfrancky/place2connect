@@ -1,0 +1,1169 @@
+definitions:
+  gorm.DeletedAt:
+    properties:
+      time:
+        type: string
+      valid:
+        description: Valid is true if Time is not NULL
+        type: boolean
+    type: object
+  handlers.AddUserFriendRequest:
+    properties:
+      friendID:
+        type: integer
+      userID:
+        type: integer
+    required:
+    - friendID
+    - userID
+    type: object
+  handlers.CommentRequest:
+    properties:
+      commentDescription:
+        minLength: 5
+        type: string
+      postID:
+        type: integer
+      userID:
+        type: integer
+    required:
+    - commentDescription
+    - postID
+    - userID
+    type: object
+  handlers.CommentResponse:
+    properties:
+      comment_description:
+        type: string
+      created_at:
+        type: string
+      id:
+        type: integer
+      post_id:
+        type: integer
+      updated_at:
+        type: string
+      user_id:
+        type: integer
+    type: object
+  handlers.LikeRequest:
+    properties:
+      isLikablePost:
+        type: boolean
+      postID:
+        type: integer
+      userID:
+        type: integer
+    required:
+    - isLikablePost
+    - postID
+    - userID
+    type: object
+  handlers.LikeResponse:
+    properties:
+      created_at:
+        type: string
+      id:
+        type: integer
+      is_likable_post:
+        type: boolean
+      post_id:
+        type: integer
+      updated_at:
+        type: string
+      user_id:
+        type: integer
+    type: object
+  handlers.PostListResponse:
+    properties:
+      postCount:
+        type: integer
+      posts:
+        items:
+          $ref: '#/definitions/handlers.PostResponse'
+        type: array
+    type: object
+  handlers.PostRequest:
+    properties:
+      description:
+        description: |-
+          FirstName       string `json:"first_name" validate:"required,min=3"`
+          LastName        string `json:"last_name" validate:"required,min=3"`
+          Location        string `json:"location,omitempty"`
+        minLength: 8
+        type: string
+      picturePath:
+        type: string
+      userID:
+        type: integer
+    required:
+    - description
+    - userID
+    type: object
+  handlers.PostResponse:
+    properties:
+      comments:
+        items:
+          $ref: '#/definitions/handlers.CommentResponse'
+        type: array
+      createdAt:
+        type: string
+      description:
+        type: string
+      firstName:
+        type: string
+      id:
+        type: integer
+      lastName:
+        type: string
+      likes:
+        items:
+          $ref: '#/definitions/handlers.LikeResponse'
+        type: array
+      location:
+        type: string
+      picturePath:
+        type: string
+      updatedAt:
+        type: string
+      userID:
+        type: integer
+      userPicturePath:
+        type: string
+    type: object
+  handlers.SignInInput:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    required:
+    - email
+    - password
+    type: object
+  handlers.SignUpInput:
+    properties:
+      email:
+        type: string
+      firstName:
+        minLength: 3
+        type: string
+      friends:
+        items:
+          $ref: '#/definitions/models.User'
+        type: array
+      impressions:
+        type: integer
+      isAdmin:
+        type: boolean
+      isVerified:
+        type: boolean
+      lastName:
+        minLength: 3
+        type: string
+      location:
+        minLength: 3
+        type: string
+      occupation:
+        minLength: 3
+        type: string
+      password:
+        minLength: 8
+        type: string
+      photo:
+        type: string
+      picturePath:
+        minLength: 3
+        type: string
+      provider:
+        description: PasswordConfirm string        `json:"passwordConfirm" validate:"required,min=8"`
+        type: string
+      viewedProfile:
+        type: integer
+    required:
+    - firstName
+    - lastName
+    - location
+    - occupation
+    - password
+    - picturePath
+    type: object
+  handlers.UpdateUserRequest:
+    properties:
+      email:
+        type: string
+      firstName:
+        type: string
+      friends:
+        items:
+          $ref: '#/definitions/models.User'
+        type: array
+      impressions:
+        type: integer
+      isAdmin:
+        type: boolean
+      isVerified:
+        type: boolean
+      lastName:
+        type: string
+      location:
+        minLength: 3
+        type: string
+      occupation:
+        minLength: 3
+        type: string
+      password:
+        minLength: 8
+        type: string
+      photo:
+        type: string
+      picturePath:
+        minLength: 3
+        type: string
+      provider:
+        type: string
+      role:
+        type: string
+      viewedProfile:
+        type: integer
+    required:
+    - firstName
+    - lastName
+    - location
+    - occupation
+    - password
+    - picturePath
+    type: object
+  handlers.UserListResponse:
+    properties:
+      users:
+        items:
+          $ref: '#/definitions/handlers.UserResponse'
+        type: array
+      usersCount:
+        type: integer
+    type: object
+  handlers.UserResponse:
+    properties:
+      created_at:
+        type: string
+      email:
+        type: string
+      firstName:
+        type: string
+      friends:
+        items:
+          $ref: '#/definitions/handlers.UserResponse'
+        type: array
+      id:
+        type: integer
+      impressions:
+        type: integer
+      isAdmin:
+        type: boolean
+      isVerified:
+        type: boolean
+      lastName:
+        type: string
+      location:
+        type: string
+      occupation:
+        type: string
+      photo:
+        type: string
+      picturePath:
+        type: string
+      provider:
+        type: string
+      role:
+        type: string
+      updated_at:
+        type: string
+      viewedProfile:
+        type: integer
+    type: object
+  models.User:
+    properties:
+      createdAt:
+        type: string
+      deletedAt:
+        $ref: '#/definitions/gorm.DeletedAt'
+      email:
+        type: string
+      firstName:
+        type: string
+      friends:
+        items:
+          $ref: '#/definitions/models.User'
+        type: array
+      id:
+        type: integer
+      impressions:
+        type: integer
+      isAdmin:
+        type: boolean
+      lastName:
+        type: string
+      location:
+        type: string
+      occupation:
+        type: string
+      password:
+        type: string
+      photo:
+        type: string
+      picturePath:
+        type: string
+      provider:
+        type: string
+      role:
+        type: string
+      updatedAt:
+        type: string
+      verified:
+        type: boolean
+      viewedProfile:
+        type: integer
+    type: object
+info:
+  contact:
+    email: contact@owonafx.com
+    name: PLACE2CONNECT API Support
+  description: PLACE2CONNECT Docs.
+  license:
+    name: pace2connect 2.0
+  termsOfService: http://swagger.io/terms/
+  title: PLACE2CONNECT API
+  version: "1.0"
+paths:
+  /api/v1/auth/login:
+    post:
+      consumes:
+      - application/json
+      description: Signin/Login  a user to the API.
+      parameters:
+      - description: Sign In Input
+        in: body
+        name: signInput
+        required: true
+        schema:
+          $ref: '#/definitions/handlers.SignInInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: answer
+          schema:
+            type: string
+        "400":
+          description: Status BadRequest
+          schema:
+            type: string
+        "403":
+          description: Status Forbidden
+          schema:
+            type: string
+        "422":
+          description: Status UnprocessableEntity
+          schema:
+            type: string
+        "502":
+          description: Status BadGateway
+          schema:
+            type: string
+      summary: login a user to the API.
+      tags:
+      - User
+  /api/v1/auth/logout:
+    get:
+      consumes:
+      - application/json
+      description: Logout  of the the API.
+      parameters:
+      - description: Authentication header
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: success
+          schema:
+            type: string
+        "403":
+          description: Status Forbidden
+          schema:
+            type: string
+        "502":
+          description: Status BadGateway
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: Logout  of the the API.
+      tags:
+      - User
+  /api/v1/auth/refresh:
+    get:
+      consumes:
+      - application/json
+      description: refresh the current TOKEN.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: success
+          schema:
+            type: string
+        "403":
+          description: Status Forbidden
+          schema:
+            type: string
+        "422":
+          description: Status UnprocessableEntity
+          schema:
+            type: string
+        "502":
+          description: Status BadGateway
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: refresh the current TOKEN
+      tags:
+      - User
+  /api/v1/auth/register:
+    post:
+      consumes:
+      - application/json
+      description: Signup/Register a new user.
+      parameters:
+      - description: SignInput
+        in: body
+        name: signInput
+        required: true
+        schema:
+          $ref: '#/definitions/handlers.SignUpInput'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/handlers.UserResponse'
+        "400":
+          description: Status BadRequest
+          schema:
+            type: string
+        "403":
+          description: Status Forbidden
+          schema:
+            type: string
+        "409":
+          description: Status Conflict
+          schema:
+            type: string
+        "502":
+          description: Status BadGateway
+          schema:
+            type: string
+      summary: create a new user
+      tags:
+      - User
+  /api/v1/auth/users/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a User. Auth is required
+      operationId: delete-user
+      parameters:
+      - description: Id of the user to delete
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Authentication header
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handlers.UserResponse'
+        "400":
+          description: Status BadRequest
+          schema:
+            type: string
+        "403":
+          description: Status Forbidden
+          schema:
+            type: string
+        "404":
+          description: Status Not Found
+          schema:
+            type: string
+        "409":
+          description: Status Conflict
+          schema:
+            type: string
+        "422":
+          description: Status UnprocessableEntity
+          schema:
+            type: string
+        "502":
+          description: Status BadGateway
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: Delete a User
+      tags:
+      - User
+  /api/v1/auth/users/{limit}/{offset}:
+    get:
+      consumes:
+      - application/json
+      description: Display all Users. Auth is required
+      operationId: all-users
+      parameters:
+      - description: Limit number of products returned (default is 20)
+        in: query
+        name: limit
+        type: integer
+      - description: Offset/Skip number of products (default is 0)
+        in: query
+        name: offset
+        type: integer
+      - description: Authentication header
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handlers.UserListResponse'
+        "400":
+          description: Status BadRequest
+          schema:
+            type: string
+        "500":
+          description: Status Internal Server Error
+          schema:
+            type: string
+        "502":
+          description: Status BadGateway
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: Display all Users
+      tags:
+      - User
+  /api/v1/imageUpload/:
+    post:
+      consumes:
+      - application/json
+      description: UploadImage func to upload an image
+      operationId: upload-image
+      parameters:
+      - description: Authentication header
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "400":
+          description: Status BadRequest
+          schema:
+            type: string
+        "403":
+          description: Status Forbidden
+          schema:
+            type: string
+        "409":
+          description: Status Conflict
+          schema:
+            type: string
+        "422":
+          description: Status UnprocessableEntity
+          schema:
+            type: string
+        "502":
+          description: Status BadGateway
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: Upload an image
+      tags:
+      - Post
+  /api/v1/posts:
+    post:
+      consumes:
+      - application/json
+      description: CreatePost create a new Post
+      operationId: create-post
+      parameters:
+      - description: The PostRequest
+        in: body
+        name: Post
+        required: true
+        schema:
+          $ref: '#/definitions/handlers.PostRequest'
+      - description: Authentication header
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/handlers.PostResponse'
+        "400":
+          description: Status BadRequest
+          schema:
+            type: string
+        "403":
+          description: Status Forbidden
+          schema:
+            type: string
+        "409":
+          description: Status Conflict
+          schema:
+            type: string
+        "422":
+          description: Status UnprocessableEntity
+          schema:
+            type: string
+        "502":
+          description: Status BadGateway
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: create a new Post
+      tags:
+      - Post
+  /api/v1/posts/{limit}/{offset}:
+    get:
+      consumes:
+      - application/json
+      description: Display all Post. Auth is required
+      operationId: all-posts
+      parameters:
+      - description: Limit number of posts returned (default is 20)
+        in: query
+        name: limit
+        type: integer
+      - description: Offset/Skip number of posts (default is 0)
+        in: query
+        name: offset
+        type: integer
+      - description: Authentication header
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handlers.PostListResponse'
+        "400":
+          description: Status BadRequest
+          schema:
+            type: string
+        "500":
+          description: Status Internal Server Error
+          schema:
+            type: string
+        "502":
+          description: Status BadGateway
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: Display all Post
+      tags:
+      - Post
+  /api/v1/posts/users/{user_id}/{limit}/{offset}:
+    get:
+      consumes:
+      - application/json
+      description: Display all Posts of a User By userId. Auth is required
+      operationId: all-user-posts
+      parameters:
+      - description: ID of the user for posts
+        in: path
+        name: user_id
+        required: true
+        type: integer
+      - description: Limit number of Posts returned (default is 20)
+        in: query
+        name: limit
+        type: integer
+      - description: Offset/Skip number of posts (default is 0)
+        in: query
+        name: offset
+        type: integer
+      - description: Authentication header
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handlers.PostListResponse'
+        "400":
+          description: Status BadRequest
+          schema:
+            type: string
+        "500":
+          description: Status Internal Server Error
+          schema:
+            type: string
+        "502":
+          description: Status BadGateway
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: Display all Posts of a User
+      tags:
+      - User
+  /api/v1/usercomments:
+    post:
+      consumes:
+      - application/json
+      description: AddCommentToPost add a new comment to Post
+      operationId: add-comment
+      parameters:
+      - description: CommentRequest
+        in: body
+        name: commentRequest
+        required: true
+        schema:
+          $ref: '#/definitions/handlers.CommentRequest'
+      - description: Authentication header
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/handlers.PostResponse'
+        "400":
+          description: Status BadRequest
+          schema:
+            type: string
+        "403":
+          description: Status Forbidden
+          schema:
+            type: string
+        "409":
+          description: Status Conflict
+          schema:
+            type: string
+        "422":
+          description: Status UnprocessableEntity
+          schema:
+            type: string
+        "502":
+          description: Status BadGateway
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: Add a new Comment to a Post
+      tags:
+      - Post
+  /api/v1/userfriends:
+    post:
+      consumes:
+      - application/json
+      description: AddFriendToUser add a new friend to User
+      operationId: add-friend
+      parameters:
+      - description: Add User to Friend
+        in: body
+        name: userFriend
+        required: true
+        schema:
+          $ref: '#/definitions/handlers.AddUserFriendRequest'
+      - description: Authentication header
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/handlers.UserResponse'
+        "400":
+          description: Status BadRequest
+          schema:
+            type: string
+        "403":
+          description: Status Forbidden
+          schema:
+            type: string
+        "409":
+          description: Status Conflict
+          schema:
+            type: string
+        "422":
+          description: Status UnprocessableEntity
+          schema:
+            type: string
+        "502":
+          description: Status BadGateway
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: Add a new Friend to a User
+      tags:
+      - User
+  /api/v1/userfriends/:
+    delete:
+      consumes:
+      - application/json
+      description: RemoveFriendToUser remove a friend to a User
+      operationId: remove-friend
+      parameters:
+      - description: Id of the User to remove the friend
+        in: path
+        name: userID
+        required: true
+        type: string
+      - description: Id of the UserFriend to remove
+        in: path
+        name: friendID
+        required: true
+        type: string
+      - description: Authentication header
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/handlers.UserResponse'
+        "400":
+          description: Status BadRequest
+          schema:
+            type: string
+        "403":
+          description: Status Forbidden
+          schema:
+            type: string
+        "409":
+          description: Status Conflict
+          schema:
+            type: string
+        "422":
+          description: Status UnprocessableEntity
+          schema:
+            type: string
+        "502":
+          description: Status BadGateway
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: Remove a new Friend to a User
+      tags:
+      - User
+  /api/v1/userlikes:
+    post:
+      consumes:
+      - application/json
+      description: AddLikeToPost add a new like to Post
+      operationId: add-like
+      parameters:
+      - description: LikeRequest
+        in: body
+        name: likeRequest
+        required: true
+        schema:
+          $ref: '#/definitions/handlers.LikeRequest'
+      - description: Authentication header
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/handlers.PostResponse'
+        "400":
+          description: Status BadRequest
+          schema:
+            type: string
+        "403":
+          description: Status Forbidden
+          schema:
+            type: string
+        "409":
+          description: Status Conflict
+          schema:
+            type: string
+        "422":
+          description: Status UnprocessableEntity
+          schema:
+            type: string
+        "502":
+          description: Status BadGateway
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: Add a new Like to a Post
+      tags:
+      - Post
+  /api/v1/users/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Get a user By ID. Auth required
+      operationId: get-user-by-id
+      parameters:
+      - description: Id of the user to get
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Authentication header
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handlers.UserResponse'
+        "400":
+          description: Status BadRequest
+          schema:
+            type: string
+        "500":
+          description: Status Internal Server Error
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: Get a user ID
+      tags:
+      - User
+    put:
+      consumes:
+      - application/json
+      description: Update a User. Auth is required
+      operationId: update-user
+      parameters:
+      - description: Id of the user to update
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: User to update
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/handlers.UpdateUserRequest'
+      - description: Authentication header
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handlers.UserResponse'
+        "400":
+          description: Status BadRequest
+          schema:
+            type: string
+        "403":
+          description: Status Forbidden
+          schema:
+            type: string
+        "404":
+          description: Status Not Found
+          schema:
+            type: string
+        "409":
+          description: Status Conflict
+          schema:
+            type: string
+        "422":
+          description: Status UnprocessableEntity
+          schema:
+            type: string
+        "502":
+          description: Status BadGateway
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: Update a user
+      tags:
+      - User
+  /api/v1/users/{userID}/{limit}/{offset}:
+    get:
+      consumes:
+      - application/json
+      description: Display all Friends of a User By userId. Auth is required
+      operationId: all-user-friends
+      parameters:
+      - description: ID of the user for friends
+        in: path
+        name: userID
+        required: true
+        type: integer
+      - description: Limit number of Friends returned (default is 20)
+        in: query
+        name: limit
+        type: integer
+      - description: Offset/Skip number of friends (default is 0)
+        in: query
+        name: offset
+        type: integer
+      - description: Authentication header
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handlers.UserListResponse'
+        "400":
+          description: Status BadRequest
+          schema:
+            type: string
+        "500":
+          description: Status Internal Server Error
+          schema:
+            type: string
+        "502":
+          description: Status BadGateway
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: Display all Friends of a User
+      tags:
+      - User
+  /api/v1/users/email/{email}:
+    get:
+      consumes:
+      - application/json
+      description: Get a user. Auth required
+      operationId: get-user-by-email
+      parameters:
+      - description: Email of the user to get
+        in: path
+        name: email
+        required: true
+        type: string
+      - description: Authentication header
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handlers.UserResponse'
+        "400":
+          description: Status BadRequest
+          schema:
+            type: string
+        "500":
+          description: Status Internal Server Error
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: Get a user
+      tags:
+      - User
+  /api/v1/users/me:
+    get:
+      consumes:
+      - application/json
+      description: Get current user.
+      parameters:
+      - description: Authentication header
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses: {}
+      security:
+      - ApiKeyAuth: []
+      summary: Logout  of the the API.
+      tags:
+      - User
+produces:
+- application/json
+schemes:
+- http
+- https
+securityDefinitions:
+  ApiKeyAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

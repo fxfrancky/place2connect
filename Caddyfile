@@ -1,0 +1,23 @@
+
+place2connect.com {
+    root * /var/www/place2connect/
+    reverse_proxy 127.0.0.1:3000
+    encode gzip zstd
+    file_server
+}
+
+api.place2connect.com {
+    root * /var/www/place2connect/
+    reverse_proxy 127.0.0.1:8000 
+    encode gzip zstd
+    file_server
+}
+
+db.place2connect.com {
+    reverse_proxy 127.0.0.1:6500
+    encode gzip zstd
+    file_server
+}
+
+
+
