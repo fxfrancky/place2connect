@@ -57,7 +57,8 @@ func DeserializeUser(c *fiber.Ctx) error {
 
 func EnableCors(app *fiber.App) *fiber.App {
 	app.Use(cors.New(cors.Config{
-		AllowOrigins:     "https://place2connect.com*, http://place2connect.com*",
+		// AllowOrigins:     "https://place2connect.com*, http://place2connect.com*",
+		AllowOrigins:     "https://*, http://*",
 		AllowHeaders:     "Origin, Content-Type, Accept, Authorization, X-CSRF-Token",
 		AllowMethods:     "GET, HEAD, PUT, PATCH, POST, DELETE, OPTIONS",
 		AllowCredentials: true,
