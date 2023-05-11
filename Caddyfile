@@ -8,7 +8,7 @@ place2connect.com {
 
 api.place2connect.com {
     root * /var/www/place2connect/
-    reverse_proxy 127.0.0.1:8000 
+    reverse_proxy 127.0.0.1:8080 
     encode gzip zstd
     file_server
 }

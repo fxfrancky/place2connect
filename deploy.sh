@@ -23,13 +23,17 @@ echo "Backend Deployed"
 echo "Start FrontEnd Deployment"
 
 cd place2connect-ui
-npm run dev
+# npm install
+npm run build
 cd ..
+cd ..
+sudo mv place2connect-ui/dist www.place2connect.com
 
 echo "Front End Deployed"
 
 echo "Building application For Caddy"
-docker-compose up -d
+sudo service caddy reload
+# docker-compose up -d
 
 # docker-compose up -d --build
 

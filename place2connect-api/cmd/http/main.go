@@ -79,7 +79,7 @@ func run(env config.Config, swagg swagger.Config, h *handlers.Handler) (func(), 
 	// start the server
 	go func() {
 		// create the fiber app
-		log.Fatal(app.Listen(":8000"))
+		log.Fatal(app.Listen(":8080"))
 	}()
 
 	// return a function to close the server and database

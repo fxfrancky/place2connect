@@ -17,6 +17,6 @@ FROM gcr.io/distroless/base-debian11
 
 COPY --from=builder /build/app /app
 # COPY --from=builder /build/.env /
-EXPOSE 8000 8000
+EXPOSE 8080 8080
 
 ENTRYPOINT ["/app"]
