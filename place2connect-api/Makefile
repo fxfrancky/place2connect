@@ -10,6 +10,7 @@ start-server:
 start-all:
 	chmod +x 	./swagg.sh
 	./swagg.sh
+	make install-modules
 	make dev-down
 	make dev
 	make start-server &
@@ -28,5 +29,4 @@ install-modules:
 	go get github.com/gofiber/swagger
 	go get github.com/gofiber/fiber/v2/middleware/csrf
 	go get -u github.com/shopspring/decimal
-	go get -u github.com/joho/godotenv
-	go get github.com/caarlos0/env/v6 
+	go install github.com/cosmtrek/air@latest 
