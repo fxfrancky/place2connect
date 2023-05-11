@@ -4,6 +4,12 @@ set -e
 echo "Pulling The App from git"
 git pull
 
+echo "Enabling swag"
+cd /usr/local/go/bin/
+PATH=$(go env GOPATH)/bin:$PATH
+swag -v
+cd /var/www/place2connect
+
 echo "Copying app.env file to place2connect-api"
 cp app.env ./place2connect-api
 
@@ -27,7 +33,7 @@ cd place2connect-ui
 npm run build
 cd ..
 cd ..
-sudo mv place2connect-ui/dist www.place2connect.com
+sudo mv place2connect/place2connect-ui/dist www.place2connect.com
 
 echo "Front End Deployed"
 
