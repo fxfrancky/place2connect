@@ -52,6 +52,7 @@ api.place2connect.com {
     # import cors https://api.place2connect.com
     reverse_proxy place2connect-api:8080
     encode gzip zstd
+    root * /var/www/place2connect
     file_server
     # https://caddy.community/t/correct-way-to-set-expires-on-caddy-2/7914/13
 	@static {
