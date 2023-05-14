@@ -83,8 +83,12 @@ services:
         "/app/start.sh"
       ]
     command: [ "npm", "run", "dev" ]
-    # volumes:
-    # - $PWD/place2connect-api/images:/srv
+    volumes:
+    - $PWD/Caddyfile:/etc/caddy/Caddyfile
+    - $PWD/site:/srv
+    - caddy_data:/data
+    - caddy_config:/config
+    - $PWD/place2connect-api/images:/srv/images
 
   # Caddy Server
   caddy:
