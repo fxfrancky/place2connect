@@ -23,8 +23,6 @@ services:
     volumes:
       - redisDB:/data
 
-
-
   # Api
   place2connect-api:
     image: place2connect-api

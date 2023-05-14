@@ -6,7 +6,7 @@ place2connect.com {
     reverse_proxy place2connect-ui:3000
     encode gzip zstd
     file_server
-    tls contact@owonafx.com #Your email for Let's Encrypt Verification
+    # tls contact@owonafx.com #Your email for Let's Encrypt Verification
 
 }
 
@@ -14,7 +14,7 @@ api.place2connect.com {
     reverse_proxy place2connect-api:8080
     encode gzip zstd
     file_server
-    tls contact@owonafx.com #Your email for Let's Encrypt Verification
+    # tls contact@owonafx.com #Your email for Let's Encrypt Verification
 
 }
 
@@ -22,7 +22,7 @@ db.place2connect.com {
     reverse_proxy postgres:5432
     encode gzip zstd
     file_server
-    tls contact@owonafx.com #Your email for Let's Encrypt Verification
+    # tls contact@owonafx.com #Your email for Let's Encrypt Verification
 
 }
 
