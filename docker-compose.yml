@@ -93,24 +93,24 @@ services:
     command: [ "npm", "run", "dev" ]
 
   # Caddy Server
-  # caddy:
-  #   image: caddy/caddy:2.6.4-alpine
-  #   container_name: caddy-service
-  #   restart: unless-stopped
-  #   ports:
-  #     - "80:80"
-  #     - "443:443"
-  #   volumes:
-  #   - $PWD/Caddyfile:/etc/caddy/Caddyfile
-  #   - $PWD/site:/srv
-  #   - caddy_data:/data
-  #   - caddy_config:/config
+  caddy:
+    image: caddy/caddy:2.6.4-alpine
+    container_name: caddy-service
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+    - $PWD/Caddyfile:/etc/caddy/Caddyfile
+    - $PWD/site:/srv
+    - caddy_data:/data
+    - caddy_config:/config
 
 volumes:
   redisDB:
   progresDB:
-  # caddy_data:
-  # caddy_config:
+  caddy_data:
+  caddy_config:
 
 # networks:
 #   backend:
