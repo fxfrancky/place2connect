@@ -54,7 +54,7 @@ services:
       ]
     command: [ "/app/main" ]
     volumes:
-    - ./place2connect-api/images:/srv
+    - ./place2connect-api/images:/srv/images
 
 
   place2connect-ui: #Define the client service so we can run it in an isolated environment.
@@ -95,7 +95,7 @@ services:
     - $PWD/site:/srv
     - caddy_data:/data
     - caddy_config:/config
-    - ./place2connect-api/images:/srv
+    - ./place2connect-api/images:/srv/images
 
 
 volumes:
