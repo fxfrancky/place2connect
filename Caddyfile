@@ -33,7 +33,7 @@ place2connect.com {
     import cors https://api.place2connect.com
 	import cors https://place2connect.com
     reverse_proxy place2connect-ui:3000
-    encode gzip zstd
+    # encode gzip zstd
     root * /var/www/place2connect
     file_server
     # file_server {
@@ -51,7 +51,7 @@ place2connect.com {
 api.place2connect.com {
     # import cors https://api.place2connect.com
     reverse_proxy place2connect-api:8080
-    encode gzip zstd
+    # encode gzip zstd
     root * /var/www/place2connect
     file_server
     # https://caddy.community/t/correct-way-to-set-expires-on-caddy-2/7914/13
@@ -66,9 +66,9 @@ api.place2connect.com {
 
 db.place2connect.com {
     reverse_proxy postgres:5432
-    encode gzip zstd
-    root * /var/www/place2connect
-    file_server
+    # encode gzip zstd
+    # root * /var/www/place2connect
+    # file_server
     # file_server {
 	# 	precompressed br gzip
 	# }
