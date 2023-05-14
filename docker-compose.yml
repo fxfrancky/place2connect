@@ -54,7 +54,7 @@ services:
       ]
     command: [ "/app/main" ]
     volumes:
-    - $PWD/place2connect-api/images:/data
+    - $PWD/place2connect-api/images:/srv
 
   place2connect-ui: #Define the client service so we can run it in an isolated environment.
     image: place2connect-ui
@@ -80,7 +80,7 @@ services:
       ]
     command: [ "npm", "run", "dev" ]
     volumes:
-    - $PWD/place2connect-api/images:/data
+    - $PWD/place2connect-api/images:/srv
 
   # Caddy Server
   caddy:
@@ -95,7 +95,7 @@ services:
     - $PWD/site:/srv
     - caddy_data:/data
     - caddy_config:/config
-    - $PWD/place2connect-api/images:/data
+    - $PWD/place2connect-api/images:/srv
 
 
 volumes:

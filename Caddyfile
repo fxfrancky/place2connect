@@ -46,29 +46,36 @@ place2connect.com {
 	# }
 	# header @static Cache-Control max-age=13392000
 
-    root * /data
-    file_server
+    root * /srv
+	encode gzip
+	file_server
+
+    # root * /data
+    # file_server
     # https://caddy.community/t/correct-way-to-set-expires-on-caddy-2/7914/13
-	@static {
-		file
-		path *.gif *.jpg *.jpeg *.png *.svg *.woff2
-	}
-	header @static Cache-Control max-age=13392000
+	# @static {
+	# 	file
+	# 	path *.gif *.jpg *.jpeg *.png *.svg *.woff2
+	# }
+	# header @static Cache-Control max-age=13392000
 
 }
 
 api.place2connect.com {
     # import cors https://api.place2connect.com
     reverse_proxy place2connect-api:8080
+    root * /srv
+	encode gzip
+	file_server
     # encode gzip zstd
-    root * /data
-    file_server
+    # root * /data
+    # file_server
     # https://caddy.community/t/correct-way-to-set-expires-on-caddy-2/7914/13
-	@static {
-		file
-		path *.gif *.jpg *.jpeg *.png *.svg *.woff2
-	}
-	header @static Cache-Control max-age=13392000
+	# @static {
+	# 	file
+	# 	path *.gif *.jpg *.jpeg *.png *.svg *.woff2
+	# }
+	# header @static Cache-Control max-age=13392000
     # tls contact@owonafx.com #Your email for Let's Encrypt Verification
 
 }
