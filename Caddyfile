@@ -3,15 +3,42 @@
     # acme_ca https://acme-v02.api.letsencrypt.org/directory
 }
 
+(cors) {
+        @cors_preflight{args.0} method OPTIONS
+        @cors{args.0} header Origin {args.0}
+
+        handle @cors_preflight{args.0} {
+                header {
+                        Access-Control-Allow-Origin "{args.0}"
+                        Access-Control-Allow-Methods "GET, POST, PUT, PATCH, DELETE, OPTIONS"
+                        Access-Control-Allow-Headers *
+                        Access-Control-Max-Age "3600"
+                        defer   #turn on defer on your header directive to make sure the new header values are set after proxying
+                }
+                respond "" 204
+        }
+
+        handle @cors{args.0} {
+                header {
+                        Access-Control-Allow-Origin "{args.0}"
+                        Access-Control-Expose-Headers *
+                        defer
+                }
+        }
+}
+
 place2connect.com {
+    # tls contact@owonafx.com #Your email for Let's Encrypt Verification
+    import cors https://api.place2connect.com
+	import cors https://place2connect.com
     reverse_proxy place2connect-ui:3000
     encode gzip zstd
     file_server
-    # tls contact@owonafx.com #Your email for Let's Encrypt Verification
 
 }
 
 api.place2connect.com {
+    import cors https://api.place2connect.com
     reverse_proxy place2connect-api:8080
     encode gzip zstd
     file_server
