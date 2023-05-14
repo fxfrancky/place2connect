@@ -5,12 +5,8 @@ services:
     image: postgres:latest
     # image: postgres:latest
     container_name: postgres
-    # container_name: postgres_place2connect
     ports:
       - "5432:5432"
-      # - 172.17.0.1:5432:5432
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
     volumes:
       - progresDB:/var/lib/postgresql/data
     env_file:
@@ -20,13 +16,8 @@ services:
   redis:
     image: redis:alpine
     container_name: redis
-    # container_name: redis_place2connect
     ports:
       - "6379:6379"
-      # - 172.17.0.1:6379:6379
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
-
     volumes:
       - redisDB:/data
 
@@ -43,9 +34,6 @@ services:
       dockerfile: ./place2connect-api/Dockerfile
     ports:
       - "8080:8080"
-      # - 172.17.0.1:8080:8080
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
     env_file:
       - ./app.env
 
@@ -73,12 +61,8 @@ services:
     build: 
       context: .
       dockerfile: ./place2connect-ui/Dockerfile
-      # context: .
-      # dockerfile: Dockerfile.dev #The client service requires a docker file to be specified. For development, we’re going to use the Dockerfile.dev file.
     ports:
       -  "3000:3000" #Next, we map the port 5173 to Docker. The React application runs on port 5173, so we need to tell Docker which port to expose for our application.
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
     env_file:
       - ./.env
     depends_on:
@@ -111,12 +95,3 @@ volumes:
   progresDB:
   caddy_data:
   caddy_config:
-
-# networks:
-#   backend:
-#   frontend:
-# networks:
-#       - p2net
-# networks:
-#   p2net:
-#     driver: bridge
