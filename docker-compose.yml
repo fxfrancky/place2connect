@@ -16,10 +16,14 @@ services:
   redis:
     image: redis:alpine
     container_name: redis
+    restart: unless-stopped
     ports:
       - "6379:6379"
+    command: redis-server --appendonly yes --replica-read-only no
     volumes:
       - redisDB:/data
+
+
 
   # Api
   place2connect-api:
