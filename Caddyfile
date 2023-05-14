@@ -1,42 +1,12 @@
 place2connect.com {
-    reverse_proxy place2connect-ui:3000 {
-        header_down Strict-Transport-Security max-age=31536000;
-    }
+    reverse_proxy place2connect-ui:3000
 }
 
 api.place2connect.com {
-    reverse_proxy place2connect-api:8080 {
-        header_down Strict-Transport-Security max-age=31536000;
-    }
+    reverse_proxy place2connect-api:8080
 }
 
 db.place2connect.com {
-    reverse_proxy postgres:5432 {
-        header_down Strict-Transport-Security max-age=31536000;
-    }
+    reverse_proxy postgres:5432
 }
-
-
-
-# place2connect.com {
-#     root * /var/www/place2connect/
-#     reverse_proxy 127.0.0.1:3000
-#     encode gzip zstd
-#     file_server
-# }
-
-# api.place2connect.com {
-#     root * /var/www/place2connect/
-#     reverse_proxy 127.0.0.1:8080 
-#     encode gzip zstd
-#     file_server
-# }
-
-# db.place2connect.com {
-#     reverse_proxy 127.0.0.1:6500
-#     encode gzip zstd
-#     file_server
-# }
-
-
 
