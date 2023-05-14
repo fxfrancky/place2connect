@@ -1,24 +1,122 @@
-version: '3.7'
+version: '3.8'
 services: 
+  # Postgres Database
+  postgres:
+    image: postgres:latest
+    # image: postgres:latest
+    container_name: postgres
+    # container_name: postgres_place2connect
+    ports:
+      - "5432:5432"
+      # - 172.17.0.1:5432:5432
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - progresDB:/var/lib/postgresql/data
+    env_file:
+      - ./app.env
+
+  # Redis Database
+  redis:
+    image: redis:alpine
+    container_name: redis
+    # container_name: redis_place2connect
+    ports:
+      - "6379:6379"
+      # - 172.17.0.1:6379:6379
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+    volumes:
+      - redisDB:/data
+
+  # Api
+  place2connect-api:
+    image: place2connect-api
+    container_name: place2connect-api
+    restart: unless-stopped
+    tty: true
+    stdin_open: true
+
+    build: 
+      context: .
+      dockerfile: ./place2connect-api/Dockerfile
+    ports:
+      - "8080:8080"
+      # - 172.17.0.1:8080:8080
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    env_file:
+      - ./app.env
+
+    depends_on:
+      - postgres
+      - redis
+    links:
+      - postgres
+      - redis
+    entrypoint:
+      [
+        "/app/wait-for.sh",
+        "postgres:5432",
+        "--",
+        "/app/start.sh"
+      ]
+    command: [ "/app/main" ]
+
+  place2connect-ui: #Define the client service so we can run it in an isolated environment.
+    image: place2connect-ui
+    container_name: place2connect-ui
+    restart: unless-stopped
+    tty: true
+    stdin_open: true
+    build: 
+      context: .
+      dockerfile: ./place2connect-ui/Dockerfile
+      # context: .
+      # dockerfile: Dockerfile.dev #The client service requires a docker file to be specified. For development, we’re going to use the Dockerfile.dev file.
+    ports:
+      -  "3000:3000" #Next, we map the port 5173 to Docker. The React application runs on port 5173, so we need to tell Docker which port to expose for our application.
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    env_file:
+      - ./.env
+    depends_on:
+      - place2connect-api
+    entrypoint:
+      [
+        "/app/wait-for.sh",
+        "place2connect-api:8080",
+        "--",
+        "/app/start.sh"
+      ]
+    command: [ "npm", "run", "dev" ]
 
   # Caddy Server
-  caddy:
-    image: caddy/caddy:2.6.4-alpine
-    container_name: caddy-service
-    restart: unless-stopped
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-    - $PWD/Caddyfile:/etc/caddy/Caddyfile
-    - $PWD/site:/srv
-    - caddy_data:/data
-    - caddy_config:/config
+  # caddy:
+  #   image: caddy/caddy:2.6.4-alpine
+  #   container_name: caddy-service
+  #   restart: unless-stopped
+  #   ports:
+  #     - "80:80"
+  #     - "443:443"
+  #   volumes:
+  #   - $PWD/Caddyfile:/etc/caddy/Caddyfile
+  #   - $PWD/site:/srv
+  #   - caddy_data:/data
+  #   - caddy_config:/config
 
 volumes:
-  caddy_data:
-  caddy_config:
+  redisDB:
+  progresDB:
+  # caddy_data:
+  # caddy_config:
 
 # networks:
 #   backend:
 #   frontend:
+# networks:
+#       - p2net
+# networks:
+#   p2net:
+#     driver: bridge

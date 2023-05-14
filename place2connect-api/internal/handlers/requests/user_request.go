@@ -7,11 +7,10 @@ import (
 
 // User Request
 type SignUpInput struct {
-	LastName  string `json:"lastName" validate:"required,min=3"`
-	FirstName string `json:"firstName" validate:"required,min=3"`
-	Email     string `json:"email" validate:"email,omitempty"`
-	Password  string `json:"password" validate:"required,min=8"`
-	// PasswordConfirm string        `json:"passwordConfirm" validate:"required,min=8"`
+	LastName      string        `json:"lastName" validate:"required,min=3"`
+	FirstName     string        `json:"firstName" validate:"required,min=3"`
+	Email         string        `json:"email" validate:"email,omitempty"`
+	Password      string        `json:"password" validate:"required,min=8"`
 	Provider      string        `json:"provider"`
 	IsAdmin       bool          `json:"isAdmin"`
 	Photo         string        `json:"photo,omitempty"`

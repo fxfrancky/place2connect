@@ -30,3 +30,5 @@ install-modules:
 	go get github.com/gofiber/fiber/v2/middleware/csrf
 	go get -u github.com/shopspring/decimal
 	go install github.com/cosmtrek/air@latest 
+	go get github.com/fsnotify/fsnotify
+	go github.com/labstack/gommon/log

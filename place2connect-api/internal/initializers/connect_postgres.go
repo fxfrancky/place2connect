@@ -28,7 +28,8 @@ func ConnectDB(config *config.Config) *gorm.DB {
 	)
 
 	var err error
-	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=disable TimeZone=Asia/Shanghai", config.DBHost, config.DBUserName, config.DBUserPassword, config.DBName, config.DBPort)
+
+	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%d sslmode=disable TimeZone=Asia/Shanghai", config.DBHost, config.DBUserName, config.DBUserPassword, config.DBName, config.DBPort)
 
 	DB, err = gorm.Open(postgres.Open(dsn), &gorm.Config{Logger: newLogger})
 	if err != nil {
@@ -40,7 +41,6 @@ func ConnectDB(config *config.Config) *gorm.DB {
 	DB.Logger = logger.Default.LogMode(logger.Info)
 
 	log.Println("Running Migrations")
-	// err = DB.AutoMigrate(&models.User{})
 	err = AutoMigrate(DB)
 	if err != nil {
 		log.Fatal("Migration Failed:  \n", err.Error())

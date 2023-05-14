@@ -38,22 +38,23 @@ func main() {
 		DeepLinking:  false,
 		DocExpansion: "none",
 	}
-
+	//
 	// setup exit code for graceful shutdown
 	var exitCode int
 	defer func() {
 		os.Exit(exitCode)
 	}()
-	rootPath := "."
-	// Init All Databases
-	postgresDB := initializers.LoadDatabases(rootPath)
-	// load config
-	env, err := config.LoadConfig(rootPath)
+
+	env, err := config.LoadConfig(config.ConfigDefaultName)
 	if err != nil {
 		fmt.Printf("error: %v", err)
 		exitCode = 1
 		return
 	}
+	// Init All Databases
+	postgresDB := initializers.LoadDatabases(env)
+	// load config
+
 	// Init All Handlers
 	h := initApp(env, postgresDB)
 
@@ -71,10 +72,10 @@ func main() {
 
 }
 
-func run(env config.Config, swagg swagger.Config, h *handlers.Handler) (func(), error) {
+func run(env *config.Config, swagg swagger.Config, h *handlers.Handler) (func(), error) {
 
 	// h := initApp(env)
-	app := h.NewRoutes(&env, swagg)
+	app := h.NewRoutes(env, swagg)
 
 	// start the server
 	go func() {
@@ -88,9 +89,7 @@ func run(env config.Config, swagg swagger.Config, h *handlers.Handler) (func(), 
 	}, nil
 }
 
-func initApp(env config.Config, postgresDB *gorm.DB) *handlers.Handler {
-	// db := initializers.ConnectDB(&env)
-
+func initApp(env *config.Config, postgresDB *gorm.DB) *handlers.Handler {
 	userRepo := userRepo.NewUserRepositoryImpl(postgresDB)
 	postRepo := postRepo.NewPostRepositoryImpl(postgresDB)
 	h := handlers.NewHandler(userRepo, postRepo)
