@@ -1,12 +1,18 @@
 place2connect.com {
     reverse_proxy place2connect-ui:3000
+    encode gzip zstd
+    file_server
 }
 
 api.place2connect.com {
     reverse_proxy place2connect-api:8080
+    encode gzip zstd
+    file_server
 }
 
 db.place2connect.com {
     reverse_proxy postgres:5432
+    encode gzip zstd
+    file_server
 }
 

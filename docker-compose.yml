@@ -94,4 +94,5 @@ volumes:
   redisDB:
   progresDB:
   caddy_data:
+    external: true
   caddy_config:
