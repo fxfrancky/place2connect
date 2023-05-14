@@ -53,6 +53,12 @@ services:
         "/app/start.sh"
       ]
     command: [ "/app/main" ]
+    volumes:
+    - $PWD/Caddyfile:/etc/caddy/Caddyfile
+    - $PWD/site:/srv
+    - caddy_data:/data
+    - caddy_config:/config
+    - $PWD/place2connect-api/images:/srv/images
 
   place2connect-ui: #Define the client service so we can run it in an isolated environment.
     image: place2connect-ui
