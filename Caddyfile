@@ -5,34 +5,41 @@
 }
 
 (cors) {
-        @cors_preflight{args.0} method OPTIONS
-        @cors{args.0} header Origin {args.0}
+        @origin{args.0} header Origin {args.0}
+        header @origin{args.0} Access-Control-Allow-Origin "{args.0}"
+        header @origin{args.0} Vary Origin
 
-        handle @cors_preflight{args.0} {
-                header {
-                        Access-Control-Allow-Origin "{args.0}"
-                        Access-Control-Allow-Methods "GET, POST, PUT, PATCH, DELETE, OPTIONS"
-                        Access-Control-Allow-Headers *
-                        Access-Control-Max-Age "3600"
-                        defer   #turn on defer on your header directive to make sure the new header values are set after proxying
-                }
-                respond "" 204
-        }
+        # @cors_preflight{args.0} method OPTIONS
+        # @cors{args.0} header Origin {args.0}
 
-        handle @cors{args.0} {
-                header {
-                        Access-Control-Allow-Origin "{args.0}"
-                        Access-Control-Expose-Headers *
-                        defer
-                }
-        }
+        # handle @cors_preflight{args.0} {
+        #         header {
+        #                 Access-Control-Allow-Origin "{args.0}"
+        #                 Access-Control-Allow-Methods "GET, POST, PUT, PATCH, DELETE, OPTIONS"
+        #                 Access-Control-Allow-Headers *
+        #                 Access-Control-Max-Age "3600"
+        #                 defer   #turn on defer on your header directive to make sure the new header values are set after proxying
+        #         }
+        #         respond "" 204
+        # }
+
+        # handle @cors{args.0} {
+        #         header {
+        #                 Access-Control-Allow-Origin "{args.0}"
+        #                 Access-Control-Expose-Headers *
+        #                 defer
+        #         }
+        # }
 }
 
 place2connect.com {
     # tls contact@owonafx.com #Your email for Let's Encrypt Verification
     # import cors https://api.place2connect.com
-	import cors https://place2connect.com
+	# import cors https://place2connect.com
     reverse_proxy place2connect-ui:3000
+    import cors http://localhost:3000
+    header Access-Control-Allow-Methods "GET, POST, PUT, PATCH, DELETE, OPTIONS"
+    header Access-Control-Allow-Headers "*"
     # encode gzip zstd
     # root * /var/www/place2connect
     # file_server
@@ -60,7 +67,7 @@ place2connect.com {
 	# }
 	# header @static Cache-Control max-age=13392000
     root * /srv/images
-    encode gzip
+    # encode gzip
     file_server
     # reverse_proxy /api/* localhost:3000
     @proxied path */api/* /images/* /uploads/*
@@ -78,6 +85,11 @@ api.place2connect.com {
     root * /srv/images
 	# encode gzip
 	file_server
+
+
+    import cors http://localhost:8080
+    header Access-Control-Allow-Methods "GET, POST, PUT, PATCH, DELETE, OPTIONS"
+    header Access-Control-Allow-Headers "*"
     # encode gzip zstd
     # root * /data
     # file_server
