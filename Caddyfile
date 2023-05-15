@@ -4,27 +4,27 @@
     # acme_ca https://acme-v02.api.letsencrypt.org/directory
 }
 
-(cors) {
-        @cors_preflight{args.0} method OPTIONS
-        @cors{args.0} header Origin {args.0}
-        handle @cors_preflight{args.0} {
-                header {
-                        Access-Control-Allow-Origin "{args.0}"
-                        Access-Control-Allow-Methods "GET, HEAD, PUT, PATCH, POST, DELETE, OPTIONS"
-                        Access-Control-Allow-Headers *
-                        Access-Control-Max-Age "3600"
-                        defer   #turn on defer on your header directive to make sure the new header values are set after proxying
-                }
-                respond "" 204
-        }
-        handle @cors{args.0} {
-                header {
-                        Access-Control-Allow-Origin "{args.0}"
-                        Access-Control-Expose-Headers *
-                        defer
-                }
-        }
-}
+# (cors) {
+#         @cors_preflight{args.0} method OPTIONS
+#         @cors{args.0} header Origin {args.0}
+#         handle @cors_preflight{args.0} {
+#                 header {
+#                         Access-Control-Allow-Origin "{args.0}"
+#                         Access-Control-Allow-Methods "GET, HEAD, PUT, PATCH, POST, DELETE, OPTIONS"
+#                         Access-Control-Allow-Headers *
+#                         Access-Control-Max-Age "3600"
+#                         defer   #turn on defer on your header directive to make sure the new header values are set after proxying
+#                 }
+#                 respond "" 204
+#         }
+#         handle @cors{args.0} {
+#                 header {
+#                         Access-Control-Allow-Origin "{args.0}"
+#                         Access-Control-Expose-Headers *
+#                         defer
+#                 }
+#         }
+# }
 
 (static) {
 	@static {
@@ -40,7 +40,7 @@ place2connect.com {
 	# import cors https://place2connect.com
     # import static
     reverse_proxy place2connect-ui:3000
-    import cors https://place2connect.com
+    # import cors https://place2connect.com
     import static
     # header Access-Control-Allow-Origins "https://place2connect.com*, http://place2connect.com*, https://api.place2connect.com*, http://api.place2connect.com*"
     # header Access-Control-Allow-Methods "GET, HEAD, PUT, PATCH, POST, DELETE, OPTIONS"
@@ -94,7 +94,7 @@ api.place2connect.com {
     file_server
     # root * /srv/images
     # encode gzip
-    import cors https://api.place2connect.com
+    # import cors https://api.place2connect.com
     import static
 }
 
