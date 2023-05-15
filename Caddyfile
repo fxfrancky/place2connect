@@ -10,7 +10,7 @@
         handle @cors_preflight{args.0} {
                 header {
                         Access-Control-Allow-Origin "{args.0}"
-                        Access-Control-Allow-Methods "GET, POST, PUT, PATCH, DELETE, OPTIONS"
+                        Access-Control-Allow-Methods "GET, HEAD, PUT, PATCH, POST, DELETE, OPTIONS"
                         Access-Control-Allow-Headers *
                         Access-Control-Max-Age "3600"
                         defer   #turn on defer on your header directive to make sure the new header values are set after proxying
@@ -26,23 +26,26 @@
         }
 }
 
-# (static) {
-# 	@static {
-# 		file
-# 		path *.ico *.css *.js *.gif *.jpg *.jpeg *.png *.svg *.woff *.woff2 *.json
-# 	}
-# 	header @static Cache-Control max-age=5184000
-# }
+(static) {
+	@static {
+		file
+		path *.ico *.css *.js *.gif *.jpg *.jpeg *.png *.svg *.woff *.woff2 *.json
+	}
+	header @static Cache-Control max-age=5184000
+}
 
 place2connect.com {
     # tls contact@owonafx.com #Your email for Let's Encrypt Verification
     # import cors https://api.place2connect.com
-	import cors https://place2connect.com
+	# import cors https://place2connect.com
     # import static
     reverse_proxy place2connect-ui:3000
-    # import cors https://place2connect.com
-    # header Access-Control-Allow-Methods "GET, POST, PUT, PATCH, DELETE, OPTIONS"
-    # header Access-Control-Allow-Headers "*"
+    import cors https://place2connect.com
+    import static
+    # header Access-Control-Allow-Origins "https://place2connect.com*, http://place2connect.com*, https://api.place2connect.com*, http://api.place2connect.com*"
+    # header Access-Control-Allow-Methods "GET, HEAD, PUT, PATCH, POST, DELETE, OPTIONS"
+    # header Access-Control-Allow-Headers "Origin, Content-Type, Accept, Authorization, X-CSRF-Token"
+    # header Access-Control-Allow-Credentials "Origin, Content-Type, Accept, Authorization, X-CSRF-Token"
     # encode gzip zstd
     # root * /var/www/place2connect
     # file_server
@@ -76,7 +79,7 @@ place2connect.com {
     # file_server
     # root * /srv/images
     # encode gzip
-    # import static
+
 
 }
 
@@ -91,7 +94,8 @@ api.place2connect.com {
     file_server
     # root * /srv/images
     # encode gzip
-    # import static
+    import cors https://api.place2connect.com
+    import static
 }
 
 db.place2connect.com {
