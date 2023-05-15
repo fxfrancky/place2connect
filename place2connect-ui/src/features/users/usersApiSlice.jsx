@@ -60,7 +60,7 @@ export const usersApiSlice = apiSlice.injectEndpoints({
             method: 'DELETE',
             body: userfriendData
           }),          
-          invalidatesTags: ['User'],
+          invalidatesTags: ['User','Post'],
         }),
     })
 })

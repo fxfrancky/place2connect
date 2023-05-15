@@ -26,13 +26,13 @@
 #         }
 # }
 
-(static) {
-	@static {
-		file
-		path *.ico *.css *.js *.gif *.jpg *.jpeg *.png *.svg *.woff *.woff2 *.json
-	}
-	header @static Cache-Control max-age=5184000
-}
+# (static) {
+# 	@static {
+# 		file
+# 		path *.ico *.css *.js *.gif *.jpg *.jpeg *.png *.svg *.woff *.woff2 *.json
+# 	}
+# 	header @static Cache-Control max-age=5184000
+# }
 
 place2connect.com {
     # tls contact@owonafx.com #Your email for Let's Encrypt Verification
@@ -41,7 +41,10 @@ place2connect.com {
     # import static
     reverse_proxy place2connect-ui:3000
     # import cors https://place2connect.com
-    import static
+    # import static
+    cache {
+        header_upstream Cache-Control no-cache
+    }
     # header Access-Control-Allow-Origins "https://place2connect.com*, http://place2connect.com*, https://api.place2connect.com*, http://api.place2connect.com*"
     # header Access-Control-Allow-Methods "GET, HEAD, PUT, PATCH, POST, DELETE, OPTIONS"
     # header Access-Control-Allow-Headers "Origin, Content-Type, Accept, Authorization, X-CSRF-Token"
@@ -95,7 +98,10 @@ api.place2connect.com {
     # root * /srv/images
     # encode gzip
     # import cors https://api.place2connect.com
-    import static
+    # import static
+    cache {
+        header_upstream Cache-Control no-cache
+    }
 }
 
 db.place2connect.com {
