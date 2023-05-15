@@ -37,7 +37,7 @@ place2connect.com {
     # import cors https://api.place2connect.com
 	# import cors https://place2connect.com
     reverse_proxy place2connect-ui:3000
-    import cors http://localhost:3000
+    import cors https://place2connect.com
     header Access-Control-Allow-Methods "GET, POST, PUT, PATCH, DELETE, OPTIONS"
     header Access-Control-Allow-Headers "*"
     # encode gzip zstd
@@ -86,8 +86,7 @@ api.place2connect.com {
 	# encode gzip
 	file_server
 
-
-    import cors http://localhost:8080
+    import cors https://place2connect.com
     header Access-Control-Allow-Methods "GET, POST, PUT, PATCH, DELETE, OPTIONS"
     header Access-Control-Allow-Headers "*"
     # encode gzip zstd
