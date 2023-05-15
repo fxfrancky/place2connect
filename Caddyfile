@@ -106,7 +106,7 @@ api.place2connect.com {
     # root * /var/www/place2connect/place2connect-api/images
     root * /srv
     # root * /srv/images
-    encode zstd gzip json
+    encode zstd gzip
     file_server
 
     @notStatic not file
