@@ -40,7 +40,7 @@ place2connect.com {
 	# import cors https://place2connect.com
     # import static
     reverse_proxy place2connect-ui:3000
-    import cors https://place2connect.com
+    # import cors https://place2connect.com
     import static
     # header Access-Control-Allow-Origins "https://place2connect.com*, http://place2connect.com*, https://api.place2connect.com*, http://api.place2connect.com*"
     # header Access-Control-Allow-Methods "GET, HEAD, PUT, PATCH, POST, DELETE, OPTIONS"
@@ -94,7 +94,7 @@ api.place2connect.com {
     file_server
     # root * /srv/images
     # encode gzip
-    import cors https://api.place2connect.com
+    # import cors https://api.place2connect.com
     import static
 }
 
