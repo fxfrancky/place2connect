@@ -1,0 +1,117 @@
+{
+    email   contact@owonafx.com
+    debug
+    # acme_ca https://acme-v02.api.letsencrypt.org/directory
+}
+
+(cors) {
+        @origin{args.0} header Origin {args.0}
+        header @origin{args.0} Access-Control-Allow-Origin "{args.0}"
+        header @origin{args.0} Vary Origin
+
+        # @cors_preflight{args.0} method OPTIONS
+        # @cors{args.0} header Origin {args.0}
+
+        # handle @cors_preflight{args.0} {
+        #         header {
+        #                 Access-Control-Allow-Origin "{args.0}"
+        #                 Access-Control-Allow-Methods "GET, POST, PUT, PATCH, DELETE, OPTIONS"
+        #                 Access-Control-Allow-Headers *
+        #                 Access-Control-Max-Age "3600"
+        #                 defer   #turn on defer on your header directive to make sure the new header values are set after proxying
+        #         }
+        #         respond "" 204
+        # }
+
+        # handle @cors{args.0} {
+        #         header {
+        #                 Access-Control-Allow-Origin "{args.0}"
+        #                 Access-Control-Expose-Headers *
+        #                 defer
+        #         }
+        # }
+}
+
+place2connect.com {
+    # tls contact@owonafx.com #Your email for Let's Encrypt Verification
+    # import cors https://api.place2connect.com
+	# import cors https://place2connect.com
+    reverse_proxy place2connect-ui:3000
+    import cors https://place2connect.com
+    header Access-Control-Allow-Methods "GET, POST, PUT, PATCH, DELETE, OPTIONS"
+    header Access-Control-Allow-Headers "*"
+    # encode gzip zstd
+    # root * /var/www/place2connect
+    # file_server
+    # file_server {
+	# 	precompressed br gzip
+	# }
+    # https://caddy.community/t/correct-way-to-set-expires-on-caddy-2/7914/13
+	# @static {
+	# 	file
+	# 	path *.gif *.jpg *.jpeg *.png *.svg *.woff2
+	# }
+	# header @static Cache-Control max-age=13392000
+
+    # root * /srv/images
+    # root * /place2connect-api/images 
+	# encode gzip
+	# file_server
+
+    # root * /data
+    # file_server
+    # https://caddy.community/t/correct-way-to-set-expires-on-caddy-2/7914/13
+	# @static {
+	# 	file
+	# 	path *.gif *.jpg *.jpeg *.png *.svg *.woff2
+	# }
+	# header @static Cache-Control max-age=13392000
+    # root * /srv/images
+    # encode gzip
+    file_server
+    # reverse_proxy /api/* localhost:3000
+    @proxied path */api/* /images/* /uploads/*
+    handle @proxied {
+        # reverse_proxy localhost:8080
+        reverse_proxy api.place2connect.com:8080
+    }
+
+}
+
+api.place2connect.com {
+    # import cors https://api.place2connect.com
+    reverse_proxy place2connect-api:8080
+
+    root * /srv/images
+	# encode gzip
+	file_server
+
+    # import cors https://place2connect.com
+    # header Access-Control-Allow-Methods "GET, POST, PUT, PATCH, DELETE, OPTIONS"
+    # header Access-Control-Allow-Headers "*"
+    # encode gzip zstd
+    # root * /data
+    # file_server
+    # https://caddy.community/t/correct-way-to-set-expires-on-caddy-2/7914/13
+	# @static {
+	# 	file
+	# 	path *.gif *.jpg *.jpeg *.png *.svg *.woff2
+	# }
+	# header @static Cache-Control max-age=13392000
+    # tls contact@owonafx.com #Your email for Let's Encrypt Verification
+
+}
+
+db.place2connect.com {
+    reverse_proxy postgres:5432
+    # encode gzip zstd
+    # root * /var/www/place2connect
+    # file_server
+    # file_server {
+	# 	precompressed br gzip
+	# }
+	
+    # tls contact@owonafx.com #Your email for Let's Encrypt Verification
+
+}
+
