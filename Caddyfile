@@ -47,7 +47,7 @@ place2connect.com {
 	# header @static Cache-Control max-age=13392000
 
     # root * /srv/images
-    root * /app/place2connect-api/images 
+    root * /place2connect-api/images 
 	# encode gzip
 	file_server
 
