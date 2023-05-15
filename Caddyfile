@@ -66,14 +66,14 @@ place2connect.com {
 	# 	path *.gif *.jpg *.jpeg *.png *.svg *.woff2
 	# }
 	# header @static Cache-Control max-age=13392000
-    root * /srv/images
+    # root * /srv/images
     # encode gzip
     file_server
     # reverse_proxy /api/* localhost:3000
     @proxied path */api/* /images/* /uploads/*
     handle @proxied {
-        reverse_proxy localhost:8080
-        # reverse_proxy api.place2connect.com:8080
+        # reverse_proxy localhost:8080
+        reverse_proxy api.place2connect.com:8080
     }
 
 }
