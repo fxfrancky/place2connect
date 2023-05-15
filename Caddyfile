@@ -47,7 +47,8 @@ place2connect.com {
 	# }
 	# header @static Cache-Control max-age=13392000
     # root * /var/www/place2connect/place2connect-ui
-    root * /srv/images
+    # root * /srv/images
+    root * /usr/share/caddy
     encode zstd gzip
     file_server
     # root * /srv/images
@@ -60,7 +61,8 @@ api.place2connect.com {
     # import cors https://api.place2connect.com
     reverse_proxy place2connect-api:8080
 
-    root * /var/www/place2connect/place2connect-api/*
+    # root * /var/www/place2connect/place2connect-api/images
+    root * /usr/share/caddy
     # root * /srv/images
     encode zstd gzip
     file_server
