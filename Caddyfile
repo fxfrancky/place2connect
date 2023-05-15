@@ -40,6 +40,7 @@ place2connect.com {
 	# import cors https://place2connect.com
     # import static
     reverse_proxy place2connect-ui:3000
+    encode zstd gzip
     # import cors https://place2connect.com
     # import static
     cache {
@@ -99,9 +100,9 @@ api.place2connect.com {
     # encode gzip
     # import cors https://api.place2connect.com
     # import static
-    cache {
-        header_upstream Cache-Control no-cache
-    }
+    # cache {
+    #     header_upstream Cache-Control no-cache
+    # }
 }
 
 db.place2connect.com {
