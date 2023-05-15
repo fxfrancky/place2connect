@@ -81,6 +81,8 @@ services:
         "/app/start.sh"
       ]
     command: [ "npm", "run", "dev" ]
+    volumes:
+    - ./place2connect-api/images:/srv
 
 
   # Caddy Server
