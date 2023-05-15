@@ -6,7 +6,7 @@ WORKDIR /app
 # COPY /place2connect-api/wait-for.sh .
 COPY wait-for.sh .
 COPY app.env .
-COPY ./place2connect-api/ .
+# COPY ./place2connect-api/ .
 
 RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 GOAMD64=v3 go build  -v -a -installsuffix cgo -o ./main -tags timetzdata -trimpath cmd/http/main.go
 
@@ -21,8 +21,8 @@ COPY   wait-for.sh .
 # COPY   /place2connect-api/start.sh .
 # COPY   /place2connect-api/wait-for.sh .
 RUN mkdir -p ./images
-COPY   /place2connect-api/images ./images
-COPY   /place2connect-api/images ./srv/images
+# COPY   /place2connect-api/images ./images
+# COPY   /place2connect-api/images ./srv/images
 
 # EXPOSE 8080
 CMD [ "/app/main" ]
