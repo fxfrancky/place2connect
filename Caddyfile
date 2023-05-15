@@ -18,8 +18,8 @@ place2connect.com {
 	# import cors https://place2connect.com
     reverse_proxy place2connect-ui:3000
     # import cors https://place2connect.com
-    # header Access-Control-Allow-Methods "GET, POST, PUT, PATCH, DELETE, OPTIONS"
-    # header Access-Control-Allow-Headers "*"
+    header Access-Control-Allow-Methods "GET, POST, PUT, PATCH, DELETE, OPTIONS"
+    header Access-Control-Allow-Headers "*"
     # encode gzip zstd
     # root * /var/www/place2connect
     # file_server
@@ -48,12 +48,12 @@ place2connect.com {
 	# header @static Cache-Control max-age=13392000
     # root * /var/www/place2connect/place2connect-ui
     # root * /srv/images
-    root * /srv
-    encode zstd gzip
-    file_server
+    # root * /srv
+    # encode zstd gzip
+    # file_server
     # root * /srv/images
     # encode gzip
-    import static
+    # import static
 
 }
 
