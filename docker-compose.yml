@@ -99,7 +99,7 @@ services:
     - caddy_data:/data
     - caddy_config:/config
     # - ./place2connect-api/images:/srv/images
-    - ./place2connect-api/images:/usr/share/
+    - ./place2connect-api/images:/srv
     # - ./place2connect-api/images:/srv  /usr/share/caddy
 
 
