@@ -53,8 +53,8 @@ services:
         "/app/start.sh"
       ]
     command: [ "/app/main" ]
-    volumes:
-    - ./place2connect-api/images:/srv
+    # volumes:
+    # - ./place2connect-api/images:/srv
     # - ./place2connect-api/images:/srv/images
 
 
@@ -81,8 +81,8 @@ services:
         "/app/start.sh"
       ]
     command: [ "npm", "run", "dev" ]
-    volumes:
-    - ./place2connect-api/images:/srv
+    # volumes:
+    # - ./place2connect-api/images:/srv
 
 
   # Caddy Server
@@ -98,8 +98,8 @@ services:
     # - $PWD/site:/srv
     - caddy_data:/data
     - caddy_config:/config
-    # - ./place2connect-api/images:/srv/images
-    - ./place2connect-api/images:/srv
+    - ./place2connect-api/images:/srv/images
+    # - ./place2connect-api/images:/srv
 
 
 volumes:
