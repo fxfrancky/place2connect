@@ -34,10 +34,10 @@
 # 	header @static Cache-Control max-age=5184000
 # }
 
-# @static {
-#   file
-#   path *.ico *.css *.js *.gif *.webp *.avif *.jpg *.jpeg *.png *.svg *.woff *.woff2 *.json
-# }
+@static {
+  file
+  path *.ico *.css *.js *.gif *.webp *.avif *.jpg *.jpeg *.png *.svg *.woff *.woff2 *.json
+}
 header @static Cache-Control max-age=5184000
 
 place2connect.com {
@@ -106,7 +106,7 @@ api.place2connect.com {
     # root * /var/www/place2connect/place2connect-api/images
     root * /srv
     # root * /srv/images
-    encode zstd gzip
+    encode zstd gzip json
     file_server
     # header      Cache-Control no-cache
 
