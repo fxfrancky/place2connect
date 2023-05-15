@@ -1,2 +1,0 @@
-VITE_REACT_APP_BACKEND=http://localhost:8000/api/v1
-VITE_REACT_APP_BACKEND_IMG=http://localhost:8000/api/v1/images

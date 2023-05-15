@@ -17,6 +17,9 @@ const ProfilePage = () => {
   const {
   data:user,
   isSuccess,
+  isError,
+  error
+  isLoading
 } = useGetUserQuery(userID) 
 
   // setUser(response)
@@ -39,8 +42,41 @@ const ProfilePage = () => {
   // useEffect(() => {
   //   getUser();
   // }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  {isError && (<p>Saddly an error occured {error.message}</p>)}
+  {isLoading && (<p>Wait a minute. The page is still loading</p>)}
 
   if (!user) return null;
+
+
+  {isSuccess && (  <Box>
+      <Navbar />
+      <Box
+        width="100%"
+        padding="2rem 6%"
+        display={isNonMobileScreens ? "flex" : "block"}
+        gap="2rem"
+        justifyContent="center"
+      >
+        { isSuccess && (
+          <>
+          <Box flexBasis={isNonMobileScreens ? "26%" : undefined}>
+          <UserWidget userID={userID} picturePath={user.picturePath} />
+          <Box m="2rem 0" />
+          <FriendListWidget userID={userID} />
+        </Box>
+        <Box
+          flexBasis={isNonMobileScreens ? "42%" : undefined}
+          mt={isNonMobileScreens ? undefined : "2rem"}
+        >
+          <MyPostWidget picturePath={user.picturePath} />
+          <Box m="2rem 0" />
+          <PostsWidget userID={userID} isProfile />
+        </Box>
+        </>
+        )}  
+      </Box>
+    </Box>
+  );}
 
   return (
     <Box>
