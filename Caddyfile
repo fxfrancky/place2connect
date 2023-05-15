@@ -34,6 +34,12 @@
 # 	header @static Cache-Control max-age=5184000
 # }
 
+# @static {
+#   file
+#   path *.ico *.css *.js *.gif *.webp *.avif *.jpg *.jpeg *.png *.svg *.woff *.woff2 *.json
+# }
+# header @static Cache-Control max-age=5184000
+
 place2connect.com {
     # tls contact@owonafx.com #Your email for Let's Encrypt Verification
     # import cors https://api.place2connect.com
@@ -41,10 +47,15 @@ place2connect.com {
     # import static
     reverse_proxy place2connect-ui:3000
     encode zstd gzip
+    header      Cache-Control max-age=3600
+
+    @notStatic not file
+	respond @notStatic "Yahaha! You found me!"
+    # reverse_proxy upstream:443
     # import cors https://place2connect.com
     # import static
 
-    header      Cache-Control no-cache
+    # header      Cache-Control no-cache
     # header           Cache-Control max-age=3600
     # header Access-Control-Allow-Origins "https://place2connect.com*, http://place2connect.com*, https://api.place2connect.com*, http://api.place2connect.com*"
     # header Access-Control-Allow-Methods "GET, HEAD, PUT, PATCH, POST, DELETE, OPTIONS"
@@ -96,6 +107,8 @@ api.place2connect.com {
     # root * /srv/images
     encode zstd gzip
     file_server
+    # header      Cache-Control no-cache
+
     # root * /srv/images
     # encode gzip
     # import cors https://api.place2connect.com
