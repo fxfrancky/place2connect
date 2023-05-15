@@ -46,7 +46,7 @@ place2connect.com {
 	# import cors https://place2connect.com
     import static
     # reverse_proxy place2connect-ui:3000
-    encode zstd gzip json
+    encode zstd gzip
     # header      Cache-Control max-age=3600
 
     @notStatic not file
@@ -101,13 +101,17 @@ place2connect.com {
 
 api.place2connect.com {
     # import cors https://api.place2connect.com
-    reverse_proxy place2connect-api:8080
+    # reverse_proxy place2connect-api:8080
 
     # root * /var/www/place2connect/place2connect-api/images
     root * /srv
     # root * /srv/images
     encode zstd gzip json
     file_server
+
+    @notStatic not file
+	# respond @notStatic "Yahaha! You found me!"
+	reverse_proxy @notStatic place2connect-api:8080
     # header      Cache-Control no-cache
 
     # root * /srv/images
