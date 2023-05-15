@@ -1,6 +1,4 @@
 import { Box, useMediaQuery } from "@mui/material";
-import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import Navbar from "../../scenes/navbar";
 import FriendListWidget from "../../scenes/widgets/FriendListWidget";
@@ -18,15 +16,14 @@ const ProfilePage = () => {
   data:user,
   isSuccess,
   isError,
-  error
+  error,
   isLoading
 } = useGetUserQuery(userID) 
 
   // setUser(response)
- 
-  
 
   if (!user){
+    console.log(`user not found with id `, userID)
     return null;
   }
 
@@ -42,13 +39,17 @@ const ProfilePage = () => {
   // useEffect(() => {
   //   getUser();
   // }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  console.log('IS Success', isSuccess)
+  console.log('IS Error', isError, error)
+  console.log('IS loading', isLoading)
+ 
   {isError && (<p>Saddly an error occured {error.message}</p>)}
   {isLoading && (<p>Wait a minute. The page is still loading</p>)}
 
   if (!user) return null;
 
 
-  {isSuccess && (  <Box>
+  return ( <Box>
       <Navbar />
       <Box
         width="100%"
@@ -78,39 +79,39 @@ const ProfilePage = () => {
     </Box>
   );}
 
-  return (
-    <Box>
-      <Navbar />
-      <Box
-        width="100%"
-        padding="2rem 6%"
-        display={isNonMobileScreens ? "flex" : "block"}
-        gap="2rem"
-        justifyContent="center"
-      >
-        { isSuccess && (
-          <>
-          <Box flexBasis={isNonMobileScreens ? "26%" : undefined}>
-          <UserWidget userID={userID} picturePath={user.picturePath} />
-          <Box m="2rem 0" />
-          <FriendListWidget userID={userID} />
-        </Box>
-        <Box
-          flexBasis={isNonMobileScreens ? "42%" : undefined}
-          mt={isNonMobileScreens ? undefined : "2rem"}
-        >
-          <MyPostWidget picturePath={user.picturePath} />
-          <Box m="2rem 0" />
-          <PostsWidget userID={userID} isProfile />
-        </Box>
-        </>
-        )}   
+  // return (
+  //   <Box>
+  //     <Navbar />
+  //     <Box
+  //       width="100%"
+  //       padding="2rem 6%"
+  //       display={isNonMobileScreens ? "flex" : "block"}
+  //       gap="2rem"
+  //       justifyContent="center"
+  //     >
+  //       { isSuccess && (
+  //         <>
+  //         <Box flexBasis={isNonMobileScreens ? "26%" : undefined}>
+  //         <UserWidget userID={userID} picturePath={user.picturePath} />
+  //         <Box m="2rem 0" />
+  //         <FriendListWidget userID={userID} />
+  //       </Box>
+  //       <Box
+  //         flexBasis={isNonMobileScreens ? "42%" : undefined}
+  //         mt={isNonMobileScreens ? undefined : "2rem"}
+  //       >
+  //         <MyPostWidget picturePath={user.picturePath} />
+  //         <Box m="2rem 0" />
+  //         <PostsWidget userID={userID} isProfile />
+  //       </Box>
+  //       </>
+  //       )}   
 
 
 
-      </Box>
-    </Box>
-  );
-};
+  //     </Box>
+  //   </Box>
+  // );
+// };
 
 export default ProfilePage;
