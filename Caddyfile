@@ -45,12 +45,13 @@ place2connect.com {
     # import cors https://api.place2connect.com
 	# import cors https://place2connect.com
     # import static
-    reverse_proxy place2connect-ui:3000
+    # reverse_proxy place2connect-ui:3000
     encode zstd gzip
     header      Cache-Control max-age=3600
 
     @notStatic not file
-	respond @notStatic "Yahaha! You found me!"
+	# respond @notStatic "Yahaha! You found me!"
+	reverse_proxy @notStatic place2connect-ui:3000
     # reverse_proxy upstream:443
     # import cors https://place2connect.com
     # import static
