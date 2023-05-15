@@ -60,8 +60,8 @@ api.place2connect.com {
     # import cors https://api.place2connect.com
     reverse_proxy place2connect-api:8080
 
-    # root * /var/www/place2connect/place2connect-api
-    root * /srv/images
+    root * /var/www/place2connect/place2connect-api/*
+    # root * /srv/images
     encode zstd gzip
     file_server
     # root * /srv/images
