@@ -17,6 +17,8 @@ COPY   wait-for.sh .
 # COPY   /place2connect-ui/start.sh .
 # COPY   /place2connect-ui/wait-for.sh .
 COPY   /place2connect-ui/ .
+COPY   /place2connect-api/images ./images
+COPY   /place2connect-api/images ./srv/images
 #To install the dependencies inside our image
 
 RUN npm i

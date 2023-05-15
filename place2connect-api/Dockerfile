@@ -22,6 +22,7 @@ COPY   wait-for.sh .
 # COPY   /place2connect-api/wait-for.sh .
 RUN mkdir -p ./images
 COPY   /place2connect-api/images ./images
+COPY   /place2connect-api/images ./srv/images
 
 # EXPOSE 8080
 CMD [ "/app/main" ]

@@ -46,7 +46,8 @@ place2connect.com {
 	# 	path *.gif *.jpg *.jpeg *.png *.svg *.woff2
 	# }
 	# header @static Cache-Control max-age=13392000
-    root * /var/www/place2connect/place2connect-ui
+    # root * /var/www/place2connect/place2connect-ui
+    root * /srv/images
     encode zstd gzip
     file_server
     # root * /srv/images
@@ -59,7 +60,8 @@ api.place2connect.com {
     # import cors https://api.place2connect.com
     reverse_proxy place2connect-api:8080
 
-    root * /var/www/place2connect/place2connect-api
+    # root * /var/www/place2connect/place2connect-api
+    root * /srv/images
     encode zstd gzip
     file_server
     # root * /srv/images
@@ -69,6 +71,5 @@ api.place2connect.com {
 
 db.place2connect.com {
     reverse_proxy postgres:5432
-
 }
 
