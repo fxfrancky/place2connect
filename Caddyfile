@@ -62,9 +62,10 @@ place2connect.com {
     root * /srv/images
     encode gzip
     file_server
-    @proxied path /api/* /images/* /uploads/*
+    @proxied path */api/* /images/* /uploads/*
     handle @proxied {
-        reverse_proxy api.place2connect.com:8000
+        reverse_proxy localhost:8000
+        # reverse_proxy api.place2connect.com:8000
     }
 
 }
