@@ -2,7 +2,47 @@
     email   contact@owonafx.com
     debug
     # acme_ca https://acme-v02.api.letsencrypt.org/directory
+    servers {
+    timeouts {
+        read_body   10s
+        read_header 10s
+        write       10s
+        idle        2m
+    }
+    max_header_size 16384
+    }
 }
+
+    (mustheaders) {
+            header {
+                    Strict-Transport-Security "max-age=31536000; includesubdomains; preload"
+                    Content-Security-Policy "default-src https: 'unsafe-inline' 'unsafe-eval'"
+                    X-Content-Type-Options "nosniff"
+                    X-Frame-Options "SAMEORIGIN"
+                    Referrer-Policy "strict-origin-when-cross-origin"
+                    X-Xss-Protection "1; mode=block"
+                    Feature-Policy "accelerometer 'none'; ambient-light-sensor 'none'; autoplay 'none'; camera 'none'; encrypted-media 'none'; fullscreen 'self'; geolocation 'none'; gyroscope 'none'; magnetometer 'none'; microphone 'none'; midi 'none'; payment 'none'; picture-in-picture *; speaker 'none'; sync-xhr 'none'; usb 'none'; vr 'none'"
+                    Expect-CT "max-age=604800"
+                    -Server
+            }
+    }
+
+    (compression) {
+            encode zstd gzip
+    }
+
+    (caching) {
+            header {
+                Cache-Control "public, max-age=604800, must-revalidate"
+                defer
+            }
+    }
+    (logs) {
+            log {
+                output file /var/log/caddy/caddy.log
+                format single_field common_log
+            }
+    }
 
 # (cors) {
 #         @cors_preflight{args.0} method OPTIONS
@@ -45,14 +85,26 @@ place2connect.com {
     # import cors https://api.place2connect.com
 	# import cors https://place2connect.com
     # import static
-    # reverse_proxy place2connect-ui:3000
+    reverse_proxy place2connect-ui:3000
     encode zstd gzip
-    header      Cache-Control max-age=3600
+    # header      Cache-Control max-age=3600
 
-    @notStatic not file
+    # @notStatic not file
 	# respond @notStatic "Yahaha! You found me!"
-	reverse_proxy @notStatic place2connect-ui:3000
-	reverse_proxy /api?* place2connect-apii:8080
+	# reverse_proxy @notStatic place2connect-ui:3000
+	# reverse_proxy /api?* place2connect-apii:8080
+
+
+    @static {
+		file
+		path *.css *.js *.ico *.gif *.jpg *.jpeg *.png *.svg *.woff
+	}
+	handle @static {
+		header Cache-Control "public, max-age=5184000, must-revalidate"
+	}
+	handle {
+		header Cache-Control "public, max-age=604800, must-revalidate"
+	}
     # reverse_proxy upstream:443
     # import cors https://place2connect.com
     # import static
@@ -109,7 +161,7 @@ api.place2connect.com {
     # root * /srv/images
     encode zstd gzip
     file_server
-    header      Cache-Control max-age=3600
+    # header      Cache-Control max-age=3600
 
 
     # @notStatic not file
