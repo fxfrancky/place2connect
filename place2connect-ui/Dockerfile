@@ -32,6 +32,7 @@ COPY .env .
 # Navigate to the application entry point and run the image
 # EXPOSE 3000
 
-CMD [ "npm", "run", "dev" ]
+CMD [ "npm", "run", "preview" ]
+# CMD [ "npm", "run", "dev" ]
 ENTRYPOINT ["/app/start.sh" ]
 

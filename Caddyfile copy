@@ -87,7 +87,7 @@ place2connect.com {
         Access-Control-Allow-Headers *
         defer
     }
-    reverse_proxy /api/* place2connect-api:8080 {
+    reverse_proxy place2connect-api:8080 {
         header_down -Access-Control-Allow-Origin
     }
     respond @options 204
@@ -140,7 +140,7 @@ place2connect.com {
 
 api.place2connect.com {
     # import cors https://api.place2connect.com
-    reverse_proxy /api/* place2connect-api:8080
+    reverse_proxy place2connect-api:8080
 
     # root * /var/www/place2connect/place2connect-api/images
     root * /srv
