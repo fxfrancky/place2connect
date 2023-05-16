@@ -51,8 +51,25 @@ place2connect.com {
     # import cors https://api.place2connect.com
 	# import cors https://place2connect.com
     # import static
-    reverse_proxy place2connect-ui:3000
+    
+    @options {
+        method OPTIONS
+    }
+    header {
+        Access-Control-Allow-Origin *
+        Access-Control-Allow-Credentials true
+        Access-Control-Allow-Methods *
+        Access-Control-Allow-Headers *
+        defer
+    }
+    respond @options 204
+    
     encode zstd gzip
+    reverse_proxy /api/* place2connect-api:8080 {
+        header_down -Access-Control-Allow-Origin
+    }
+
+    reverse_proxy place2connect-ui:3000
     # header      Cache-Control max-age=3600
 
     # @notStatic not file
@@ -66,31 +83,19 @@ place2connect.com {
     # import cors https://reisadvies.matsimitsu.nl
 
 
-    @static {
-		file
-		path *.css *.js *.ico *.gif *.jpg *.jpeg *.png *.svg *.woff
-	}
-	handle @static {
-		header Cache-Control "public, max-age=5184000, must-revalidate"
-	}
-	handle {
-		header Cache-Control "public, max-age=604800, must-revalidate"
-	}
+    # @static {
+	# 	file
+	# 	path *.css *.js *.ico *.gif *.jpg *.jpeg *.png *.svg *.woff
+	# }
+	# handle @static {
+	# 	header Cache-Control "public, max-age=5184000, must-revalidate"
+	# }
+	# handle {
+	# 	header Cache-Control "public, max-age=604800, must-revalidate"
+	# }
 
-    @options {
-        method OPTIONS
-    }
-    header {
-        Access-Control-Allow-Origin *
-        Access-Control-Allow-Credentials true
-        Access-Control-Allow-Methods *
-        Access-Control-Allow-Headers *
-        defer
-    }
-    reverse_proxy /api/* place2connect-api:8080 {
-        header_down -Access-Control-Allow-Origin
-    }
-    respond @options 204
+   
+   
     # reverse_proxy upstream:443
     # import cors https://place2connect.com
     # import static
