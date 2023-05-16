@@ -60,6 +60,7 @@ place2connect.com {
         Access-Control-Allow-Credentials true
         Access-Control-Allow-Methods *
         Access-Control-Allow-Headers *
+        # Access-Control-Allow-Headers Origin, Content-Type, Accept, Authorization, X-CSRF-Token
         defer
     }
     respond @options 204
@@ -168,7 +169,8 @@ api.place2connect.com {
     header {
         # Access-Control-Allow-Origin https://place2connect.com , http://place2connect.com
         Access-Control-Allow-Methods GET,POST,OPTIONS,HEAD,PATCH,PUT,DELETE
-        Access-Control-Allow-Headers Origin, Content-Type, Accept, Authorization, X-CSRF-Token
+        Access-Control-Allow-Headers *
+        # Access-Control-Allow-Headers Origin, Content-Type, Accept, Authorization, X-CSRF-Token
         Access-Control-Max-Age 86400
         Access-Control-Allow-Credentials true
 
@@ -176,7 +178,6 @@ api.place2connect.com {
 
 
     reverse_proxy /api/* place2connect-api:8080
-
     # root * /var/www/place2connect/place2connect-api/images
     root * /srv
     # root * /srv/images
