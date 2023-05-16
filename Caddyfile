@@ -65,9 +65,11 @@ place2connect.com {
     respond @options 204
     
     encode zstd gzip
-    reverse_proxy /api/* place2connect-api:8080 {
-        header_down -Access-Control-Allow-Origin
-    }
+    reverse_proxy /api/* place2connect-api:8080
+    
+    #  {
+    #     header_down -Access-Control-Allow-Origin
+    # }
 
     reverse_proxy place2connect-ui:3000
     # header      Cache-Control max-age=3600
