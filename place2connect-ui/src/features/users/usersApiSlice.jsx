@@ -21,7 +21,7 @@ export const usersApiSlice = apiSlice.injectEndpoints({
             keepUnusedDataFor: 5,
             providesTags: ['User'],
         }),
-         addUser: builder.mutation({
+        addUser: builder.mutation({
           query: (user) => ({
             url : REGISTER_URL,
             method: 'POST',
