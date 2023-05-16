@@ -3,79 +3,8 @@
     debug
 
 }
-# (cors) {
-#   @origin{args.0} header Origin {args.0}
-#   header @origin{args.0} Access-Control-Allow-Origin "{args.0}"
-#   header @origin{args.0} Vary Origin
-# }
-
-
-# (cors) {
-#         @cors_preflight{args.0} method OPTIONS
-#         @cors{args.0} header Origin {args.0}
-#         handle @cors_preflight{args.0} {
-#                 header {
-#                         Access-Control-Allow-Origin "{args.0}"
-#                         Access-Control-Allow-Methods "GET, HEAD, PUT, PATCH, POST, DELETE, OPTIONS"
-#                         Access-Control-Allow-Headers *
-#                         Access-Control-Max-Age "3600"
-#                         defer   #turn on defer on your header directive to make sure the new header values are set after proxying
-#                 }
-#                 respond "" 204
-#         }
-#         handle @cors{args.0} {
-#                 header {
-#                         Access-Control-Allow-Origin "{args.0}"
-#                         Access-Control-Expose-Headers *
-#                         defer
-#                 }
-#         }
-# }
-
-# (static) {
-# 	@static {
-# 		file
-# 		path *.ico *.css *.js *.gif *.jpg *.jpeg *.png *.svg *.woff *.woff2 *.json
-# 	}
-# 	header @static Cache-Control max-age=5184000
-# }
-
-# @static {
-#   file
-#   path *.ico *.css *.js *.gif *.webp *.avif *.jpg *.jpeg *.png *.svg *.woff *.woff2 *.json
-# }
-# header @static Cache-Control max-age=5184000
 
 place2connect.com {
-    # tls contact@owonafx.com #Your email for Let's Encrypt Verification
-    # import cors https://api.place2connect.com
-	# import cors https://place2connect.com
-    # import static
-    reverse_proxy place2connect-ui:3000
-    encode zstd gzip
-    # header      Cache-Control max-age=3600
-
-    # @notStatic not file
-	# respond @notStatic "Yahaha! You found me!"
-	# reverse_proxy @notStatic place2connect-ui:3000
-	# reverse_proxy /api?* place2connect-apii:8080
-    # header Access-Control-Allow-Methods "GET, HEAD, PUT, PATCH, POST, DELETE, OPTIONS"
-    # header Access-Control-Allow-Headers "*"
-
-    # import cors http://localhost:3000
-    # import cors https://reisadvies.matsimitsu.nl
-
-
-    @static {
-		file
-		path *.css *.js *.ico *.gif *.jpg *.jpeg *.png *.svg *.woff
-	}
-	handle @static {
-		header Cache-Control "public, max-age=5184000, must-revalidate"
-	}
-	handle {
-		header Cache-Control "public, max-age=604800, must-revalidate"
-	}
 
     @options {
         method OPTIONS
@@ -87,81 +16,45 @@ place2connect.com {
         Access-Control-Allow-Headers *
         defer
     }
-    reverse_proxy place2connect-api:8080 {
-        header_down -Access-Control-Allow-Origin
-    }
     respond @options 204
-    # reverse_proxy upstream:443
-    # import cors https://place2connect.com
-    # import static
+    
+    encode zstd gzip
+    reverse_proxy /api/* place2connect-api:8080
 
-    # header      Cache-Control no-cache
-    # header           Cache-Control max-age=3600
-    # header Access-Control-Allow-Origins "https://place2connect.com*, http://place2connect.com*, https://api.place2connect.com*, http://api.place2connect.com*"
-    # header Access-Control-Allow-Methods "GET, HEAD, PUT, PATCH, POST, DELETE, OPTIONS"
-    # header Access-Control-Allow-Headers "Origin, Content-Type, Accept, Authorization, X-CSRF-Token"
-    # header Access-Control-Allow-Credentials "Origin, Content-Type, Accept, Authorization, X-CSRF-Token"
-    # encode gzip zstd
-    # root * /var/www/place2connect
-    # file_server
-    # file_server {
-	# 	precompressed br gzip
-	# }
-    # https://caddy.community/t/correct-way-to-set-expires-on-caddy-2/7914/13
-	# @static {
-	# 	file
-	# 	path *.gif *.jpg *.jpeg *.png *.svg *.woff2
-	# }
-	# header @static Cache-Control max-age=13392000
-
-    # root * /srv/images
-    # root * /place2connect-api/images 
-	# encode gzip
-	# file_server
-
-    # root * /data
-    # file_server
-    # https://caddy.community/t/correct-way-to-set-expires-on-caddy-2/7914/13
-	# @static {
-	# 	file
-	# 	path *.gif *.jpg *.jpeg *.png *.svg *.woff2
-	# }
-	# header @static Cache-Control max-age=13392000
-    # root * /var/www/place2connect/place2connect-ui
-    # root * /srv/images
-    # root * /srv
-    # encode zstd gzip
-    # file_server
-    # root * /srv/images
-    # encode gzip
-
+    reverse_proxy place2connect-ui:3000
 
 }
 
 api.place2connect.com {
-    # import cors https://api.place2connect.com
-    reverse_proxy place2connect-api:8080
+     @cors_preflight {
+		method OPTIONS
+	}
+	respond @cors_preflight 204
 
-    # root * /var/www/place2connect/place2connect-api/images
+    @origin1 {
+        header Origin https://place2connect.com
+	}
+	header @origin1 {
+        Access-Control-Allow-Origin https://place2connect.com
+	}
+	@origin2 {
+        header Origin http://place2connect.com
+	}
+	header @origin2 {
+        Access-Control-Allow-Origin http://place2connect.com
+	}
+
+    header {
+        Access-Control-Allow-Methods GET,POST,OPTIONS,HEAD,PATCH,PUT,DELETE
+        Access-Control-Allow-Headers Origin, Content-Type, Accept, Authorization, X-CSRF-Token
+        Access-Control-Max-Age 86400
+    }
+
+
+    reverse_proxy /api/* place2connect-api:8080
     root * /srv
-    # root * /srv/images
     encode zstd gzip
     file_server
-    # header      Cache-Control max-age=3600
-
-
-    # @notStatic not file
-	# respond @notStatic "Yahaha! You found me!"
-	# reverse_proxy @notStatic place2connect-api:8080
-    # header      Cache-Control no-cache
-
-    # root * /srv/images
-    # encode gzip
-    # import cors https://api.place2connect.com
-    # import static
-    # cache {
-    #     header_upstream Cache-Control no-cache
-    # }
 }
 
 db.place2connect.com {
