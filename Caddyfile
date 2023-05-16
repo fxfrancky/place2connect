@@ -148,23 +148,23 @@ place2connect.com {
 
 api.place2connect.com {
     # import cors https://api.place2connect.com
-    #  @cors_preflight {
-	# 	method OPTIONS
-	# }
-	# respond @cors_preflight 204
+    @cors_preflight {
+		method OPTIONS
+	}
+	respond @cors_preflight 204
 
-    # @origin1 {
-    #     header Origin https://place2connect.com
-	# }
-	# header @origin1 {
-    #     Access-Control-Allow-Origin https://place2connect.com
-	# }
-	# @origin2 {
-    #     header Origin http://place2connect.com
-	# }
-	# header @origin2 {
-    #     Access-Control-Allow-Origin http://place2connect.com
-	# }
+    @origin1 {
+        header Origin https://place2connect.com
+	}
+	header @origin1 {
+        Access-Control-Allow-Origin https://place2connect.com
+	}
+	@origin2 {
+        header Origin http://place2connect.com
+	}
+	header @origin2 {
+        Access-Control-Allow-Origin http://place2connect.com
+	}
 
     # header {
     #     # Access-Control-Allow-Origin https://place2connect.com , http://place2connect.com
