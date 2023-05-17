@@ -6,7 +6,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        forward: 'https://api.place2connect.com',
+        target: 'https://api.place2connect.com',
         secure: true,
         ws: true,
         rewrite: path => path.replace('api', ''),
@@ -18,3 +18,5 @@ export default defineConfig({
   },
   plugins: [react()],
 })
+
+// place2connect-ui:3000
