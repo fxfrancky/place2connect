@@ -50,20 +50,32 @@ const ProfilePage = () => {
   // {isError && (<p>Saddly an error occured {error.message}</p>)}
   // {isLoading && (<p>Wait a minute. The page is still loading</p>)}
 
-  const getUser = async () => {
-  const response = await fetch(`${GO_API}/users/${userID}`, {
-    method: "GET",
-    headers: { Authorization: `Bearer ${token}` },
-    mode: "cors"
-  });
-    const data = await response.json();
-    console.log("******************************** the user returned is ", data)
-    setUser(data);
-  };
+  // const getUser = async () => {
+  // const response = await fetch(`${GO_API}/users/${userID}`, {
+  //   method: "GET",
+  //   headers: { Authorization: `Bearer ${token}` },
+  //   mode: "cors"
+  // });
+  //   const data = await response.json();
+  //   console.log("******************************** the user returned is ", data)
+  //   setUser(data);
+  // };
+
+  // useEffect(() => {
+  //   getUser();
+  // }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
 
   useEffect(() => {
-    getUser();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  fetch(`${GO_API}/users/${userID}`, {
+        method: "GET",
+        headers: { Authorization: `Bearer ${token}` },
+        mode: "cors"
+      })
+  .then(response => response.json())
+  .then(data => setUser(data))
+  .catch(error => console.error(error));
+  }, [token, userID]);
 
   if (!user) return null;
 
