@@ -19,13 +19,29 @@ place2connect.com {
     encode zstd gzip
     reverse_proxy /api/* place2connect-api:8080
     reverse_proxy place2connect-ui:3000
+
+    @static {
+    file
+    path *.ico *.css *.js *.gif *.jpg *.jpeg *.png *.svg *.woff
+    }
+    header @static Cache-Control max-age=5184000
 }
 
 api.place2connect.com {
+    @options {
+        method OPTIONS
+    }
+    respond @options 204
     reverse_proxy /api/* place2connect-api:8080
     root * /srv
     encode zstd gzip
     file_server
+
+    @static {
+    file
+    path *.ico *.css *.js *.gif *.jpg *.jpeg *.png *.svg *.woff
+    }
+    header @static Cache-Control max-age=5184000
 }
 
 db.place2connect.com {
