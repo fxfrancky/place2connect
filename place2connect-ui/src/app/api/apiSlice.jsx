@@ -9,6 +9,9 @@ const baseQuery = fetchBaseQuery({
   baseUrl: `${GO_API}`,
   credentials: 'include',
   prepareHeaders: (headers, { getState, endpoint }) => {
+      headers.set('Cache-Control', 'no-cache');
+      headers.set('Pragma', 'no-cache');
+      headers.set('Expires', '0');
     const UPLOAD_ENDPOINTS = ['uploadImage'];
     if (!UPLOAD_ENDPOINTS.includes(endpoint)) {
         const token = getState().auth.token

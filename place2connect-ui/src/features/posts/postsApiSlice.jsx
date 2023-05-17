@@ -10,17 +10,17 @@ export const postsApiSlice = apiSlice.injectEndpoints({
     endpoints: builder => ({
         getPosts: builder.query({
             query: ()=> POSTS_URL,
-            keepUnusedDataFor: 5,
+            // keepUnusedDataFor: 5,
             providesTags: ['Post'],
         }),
         getUserPosts: builder.query({
             query: (id)=> `${USER_POSTS_URL}/${id}`,
-            keepUnusedDataFor: 5,
+            // keepUnusedDataFor: 5,
             providesTags: ['Post'],
         }),
         getPost: builder.query({
             query: (id)=> `${POSTS_URL}/${id}`,
-            keepUnusedDataFor: 5,
+            // keepUnusedDataFor: 5,
             providesTags: ['Post'],
         }),
         addPost: builder.mutation({
