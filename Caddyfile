@@ -8,13 +8,13 @@ place2connect.com {
     @options {
         method OPTIONS
     }
-    # header {
+    header {
         # Access-Control-Allow-Origin *
-        # Access-Control-Allow-Credentials true
+        Access-Control-Allow-Credentials true
         # Access-Control-Allow-Methods *
         # Access-Control-Allow-Headers *
         # defer
-    # }
+    }
     respond @options 204
     encode zstd gzip
     reverse_proxy /api/* place2connect-api:8080
@@ -28,20 +28,20 @@ place2connect.com {
 }
 
 api.place2connect.com {
-    @options {
-        method OPTIONS
-    }
-    respond @options 204
+    # @options {
+    #     method OPTIONS
+    # }
+    # respond @options 204
     reverse_proxy /api/* place2connect-api:8080
     root * /srv
     encode zstd gzip
     file_server
 
-    @static {
-    file
-    path *.ico *.css *.js *.gif *.jpg *.jpeg *.png *.svg *.woff
-    }
-    header @static Cache-Control max-age=5184000
+    # @static {
+    # file
+    # path *.ico *.css *.js *.gif *.jpg *.jpeg *.png *.svg *.woff
+    # }
+    # header @static Cache-Control max-age=5184000
 }
 
 db.place2connect.com {
