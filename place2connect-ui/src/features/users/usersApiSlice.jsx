@@ -8,17 +8,17 @@ export const usersApiSlice = apiSlice.injectEndpoints({
     endpoints: builder => ({
         getUsers: builder.query({
             query: ()=> USERS_URL,
-            // keepUnusedDataFor: 5,
+            keepUnusedDataFor: 0,
             providesTags: ['User'],
         }),
         getUser: builder.query({
             query: (id)=> `${USERS_URL}/${id}`,
-            // keepUnusedDataFor: 5,
+            keepUnusedDataFor: 0,
             providesTags: ['User'],
         }),
         getUserFriends: builder.query({
             query: (id)=> `${USER_FRIEND_URL}/${id}`,
-            // keepUnusedDataFor: 5,
+            keepUnusedDataFor: 0,
             providesTags: ['User'],
         }),
         addUser: builder.mutation({
