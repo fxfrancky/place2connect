@@ -5,17 +5,17 @@
 }
 
 place2connect.com {
-    @options {
-        method OPTIONS
-    }
-    header {
+    # @options {
+    #     method OPTIONS
+    # }
+    # header {
         # Access-Control-Allow-Origin *
-        Access-Control-Allow-Credentials true
+        # Access-Control-Allow-Credentials true
         # Access-Control-Allow-Methods *
         # Access-Control-Allow-Headers *
         # defer
-    }
-    respond @options 204
+    # }
+    # respond @options 204
     encode zstd gzip
     reverse_proxy /api/* place2connect-api:8080
     reverse_proxy place2connect-ui:3000
