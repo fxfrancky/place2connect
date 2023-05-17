@@ -54,6 +54,7 @@ const ProfilePage = () => {
   const response = await fetch(`${GO_API}/users/${userID}`, {
     method: "GET",
     headers: { Authorization: `Bearer ${token}` },
+    mode: "cors"
   });
     const data = await response.json();
     console.log("******************************** the user returned is ", data)
