@@ -11,17 +11,19 @@ export const postsApiSlice = apiSlice.injectEndpoints({
         getPosts: builder.query({
             query: ()=> POSTS_URL,
             keepUnusedDataFor: 0,
-            providesTags: ['Post'],
+            providesTags: () => ["Post"],
         }),
         getUserPosts: builder.query({
             query: (id)=> `${USER_POSTS_URL}/${id}`,
             keepUnusedDataFor: 0,
-            providesTags: ['Post'],
+            providesTags: () => ["Post"],
+            // providesTags: ['Post'],
         }),
         getPost: builder.query({
             query: (id)=> `${POSTS_URL}/${id}`,
             keepUnusedDataFor: 0,
-            providesTags: ['Post'],
+            providesTags: () => ["Post"],
+            // providesTags: ['Post'],
         }),
         addPost: builder.mutation({
           query: (post) => ({
@@ -29,7 +31,7 @@ export const postsApiSlice = apiSlice.injectEndpoints({
             method: 'POST',
             body: post
           }),          
-          invalidatesTags: ['Post'],
+          invalidatesTags: () => ["Post"],
         }),
         uploadImage: builder.mutation({
           query: (picture) => ({
@@ -37,7 +39,7 @@ export const postsApiSlice = apiSlice.injectEndpoints({
             method: 'POST',
             body: picture
           }),          
-          invalidatesTags: ['Post'],
+          invalidatesTags: () => ["Post"],
         }),
         addCommentToPost: builder.mutation({
           query: (postComment) => ({
@@ -45,7 +47,7 @@ export const postsApiSlice = apiSlice.injectEndpoints({
             method: 'POST',
             body: postComment
           }),          
-          invalidatesTags: ['Post'],
+          invalidatesTags: () => ["Post"],
         }),
         addLikeToPost: builder.mutation({
           query: (postLike) => ({
@@ -53,7 +55,7 @@ export const postsApiSlice = apiSlice.injectEndpoints({
             method: 'POST',
             body: postLike
           }),          
-          invalidatesTags: ['Post'],
+          invalidatesTags: () => ["Post"],
         }),
     })
 })

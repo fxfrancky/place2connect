@@ -9,17 +9,20 @@ export const usersApiSlice = apiSlice.injectEndpoints({
         getUsers: builder.query({
             query: ()=> USERS_URL,
             keepUnusedDataFor: 0,
-            providesTags: ['User'],
+            providesTags: () => ["User"],
+            // providesTags: ['User'],
         }),
         getUser: builder.query({
             query: (id)=> `${USERS_URL}/${id}`,
             keepUnusedDataFor: 0,
-            providesTags: ['User'],
+            providesTags: () => ["User"],
+            // providesTags: ['User'],
         }),
         getUserFriends: builder.query({
             query: (id)=> `${USER_FRIEND_URL}/${id}`,
             keepUnusedDataFor: 0,
-            providesTags: ['User'],
+            // providesTags: ['User'],
+            providesTags: () => ["User"],
         }),
         addUser: builder.mutation({
           query: (user) => ({
@@ -27,8 +30,8 @@ export const usersApiSlice = apiSlice.injectEndpoints({
             method: 'POST',
             body: user
           }),
-          
-          invalidatesTags: ['User'],
+          invalidatesTags: () => ["User"],
+          // invalidatesTags: ['User'],
         }),
         updateUser: builder.mutation({
           query: (user) => ({
@@ -36,7 +39,8 @@ export const usersApiSlice = apiSlice.injectEndpoints({
             method: 'PUT',
             body: user
           }),
-          invalidatesTags: ['User'],
+          invalidatesTags: () => ["User"],
+          // invalidatesTags: ['User'],
         }),
         deleteUser: builder.mutation({
           query: ({id}) => ({
@@ -44,23 +48,26 @@ export const usersApiSlice = apiSlice.injectEndpoints({
             method: 'DELETE',
             body: id            
           }),
-          invalidatesTags: ['User'],
+          invalidatesTags: () => ["User"],
+          // invalidatesTags: ['User'],
         }),
         addFriendToUser: builder.mutation({
           query: (userfriendData) => ({
             url : USER_FRIEND_URL,
             method: 'POST',
             body: userfriendData
-          }),          
-          invalidatesTags: ['User'],
+          }), 
+          invalidatesTags: () => ["User"],         
+          // invalidatesTags: ['User'],
         }),
         removeFriendFromUser: builder.mutation({
           query: (userfriendData) => ({
             url : USER_FRIEND_URL,
             method: 'DELETE',
             body: userfriendData
-          }),          
-          invalidatesTags: ['User','Post'],
+          }), 
+          invalidatesTags: () => ["User"],         
+          // invalidatesTags: ['User','Post'],
         }),
     })
 })
