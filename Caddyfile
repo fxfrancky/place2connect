@@ -33,9 +33,9 @@ api.place2connect.com {
     # }
     # respond @options 204
     reverse_proxy /api/* place2connect-api:8080
-    root * /srv
-    encode zstd gzip
-    file_server
+    # root * /srv
+    # encode zstd gzip
+    # file_server
 
     # @static {
     # file
