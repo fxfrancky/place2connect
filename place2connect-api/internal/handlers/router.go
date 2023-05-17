@@ -17,7 +17,7 @@ func (h *Handler) NewRoutes(config *config.Config, swagg swagger.Config) *fiber.
 	apiPath := "/api/" + config.APIVersion
 	app := fiber.New()
 
-	app = middleware.EnableCors(app)
+	// app = middleware.EnableCors(app)
 
 	// Main /api/v1 route Group
 	v1 := app.Group(apiPath)
