@@ -12,7 +12,7 @@ import storage from 'redux-persist/lib/storage';
 
 // combine all reducers
 const reducers = combineReducers({
-    [apiSlice.reducerPath]: apiSlice.reducer,
+    // [apiSlice.reducerPath]: apiSlice.reducer,
     auth:  authReducer
 })
 
